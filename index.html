@@ -42,13 +42,11 @@
     </figure>
   </div>
   <h3 class="section-kicker" style="margin-top:26px;">Key Contributions</h3>
-  <div class="link-row">
-    <a class="btn" href="#results">🧪 Simulation</a>
-    <a class="btn" href="#gallery">🎞 Experiments</a>
-    <span class="btn" aria-disabled="true" style="opacity:0.6; cursor:default;">📄 Paper (coming soon)</span>
-    <span class="btn" aria-disabled="true" style="opacity:0.6; cursor:default;">💻 Code (coming soon)</span>
-    <span class="btn" aria-disabled="true" style="opacity:0.6; cursor:default;">📚 arXiv (coming soon)</span>
-  </div>
+  <ul class="contrib-list">
+    <li>We extend Rigo et al.'s hierarchical contact-optimization architecture from a single robot to a team, replacing its externally supplied reference trajectory with a density-transport constraint given only a start and goal pose.</li>
+    <li>We unify box-level and robot-level obstacle and inter-agent avoidance under one control density function formalism, threaded through as online parameters updated every control step.</li>
+    <li>We validate on real Unitree Go2 contact dynamics in MuJoCo, on the two hardest scenarios (dual- and triple-quadruped teams), against a rotated-footprint clearance check, a controller-performance ablation, and a classical RRT*-plus-tracking baseline.</li>
+  </ul>
 </header>
 
 <main>
@@ -269,7 +267,7 @@
           <source src="assets/videos/case3_gallery_final_variant.mp4" type="video/mp4">
         </video>
         <div class="card-body">
-          <h4>Final variant &mdash; full U-turn</h4>
+          <h4>Final variant</h4>
           <p>An earlier development-stage two-obstacle scenario tracing a full U-turn around both obstacles, inside a closed perimeter wall.</p>
           <div class="tag-row"><span class="tag">N=2</span><span class="tag">2 obstacles</span><span class="tag">walled</span></div>
         </div>
@@ -326,7 +324,7 @@
           <source src="assets/videos/case4_gallery_final_variant.mp4" type="video/mp4">
         </video>
         <div class="card-body">
-          <h4>Final variant &mdash; full U-turn</h4>
+          <h4>Final variant</h4>
           <p>An earlier development-stage two-obstacle scenario tracing a full U-turn around both obstacles, inside a closed perimeter wall.</p>
           <div class="tag-row"><span class="tag">N=3</span><span class="tag">2 obstacles</span><span class="tag">walled</span></div>
         </div>
