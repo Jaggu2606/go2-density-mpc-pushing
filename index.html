@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collaborative Manipulation Using Density Functions on the Unitree Go2</title>
+<meta name="description" content="A hierarchical, density-safe framework for multi-quadruped collaborative box pushing, validated on Unitree Go2 dynamics in MuJoCo.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <div class="wrap">
+    <a class="brand" href="#top">Density-Safe Multi-Go2 Manipulation</a>
+    <nav>
+      <a href="#abstract">Abstract</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#baseline">Baseline</a>
+      <a href="#limitations">Limitations</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+  </div>
+</div>
+
+<a id="top"></a>
+<header class="hero wrap">
+  <h1>Collaborative Manipulation Using Density Functions on the Unitree&nbsp;Go2</h1>
+  <p class="authors">Jagannath &nbsp;&middot;&nbsp; Sriram S.K.S Narayanan &nbsp;&middot;&nbsp; Umesh Vaidya</p>
+  <p class="affiliation">Department of Mechanical Engineering, Clemson University, Clemson, SC, USA</p>
+  <span class="venue">ACC 2027 &middot; Submission</span>
+  <div class="link-row">
+    <a class="btn primary" href="assets/ACC2027_initial.pdf">📄 Paper (PDF)</a>
+    <a class="btn" href="#results">▶ Results</a>
+    <a class="btn" href="#gallery">🎞 Video Gallery</a>
+    <a class="btn" href="#bibtex">❝ Cite</a>
+  </div>
+</header>
+
+<main>
+
+<section id="abstract" class="wrap">
+  <span class="section-kicker">Abstract</span>
+  <h2 class="section-title">Density-safe loco-manipulation, for a team</h2>
+  <div class="abstract-card">
+    <p>This paper presents a hierarchical, density-safe framework for collaborative loco-manipulation, extending a single-robot contact-optimization architecture to a team of <strong>N</strong> quadrupedal robots pushing a shared box to a goal pose. A box-level MPC solves for each robot's push force and fixed contact offset under a control-density-transport constraint on the box's own pose, requiring only a start and goal pose rather than an externally supplied reference trajectory, with a static-obstacle term folded into the same density so the box's path is collision-aware by construction. At the robot level, each quadruped's own whole-body MPC tracks its assigned contact point while enforcing a second density constraint, threaded through as online parameters so that both a moving contact point and a teammate's current position are accounted for every control step.</p>
+    <p>The framework is validated on real Unitree Go2 contact and whole-body dynamics in MuJoCo, on the two hardest scenarios evaluated: two robots pushing a box through a <strong>1.90&nbsp;m</strong> gap between static obstacles, and three robots pushing a heavier T-box through a <strong>2.49&nbsp;m</strong> gap. Both scenarios converge to the goal pose with the box's true rotated-footprint clearance to each obstacle at or near zero margin — consistent with operating at the density constraint's own worst-case Minkowski boundary rather than with margin to spare — and both expose a classical RRT*-plus-tracking baseline, using the identical underlying MPCs with density avoidance disabled, failing to reach the goal in either case. A genuine limitation is also reported: the robot-level density constraint, layered on an already force-asymmetric push regime, was found to destabilize the whole-body controller independent of obstacle proximity, resolved for the reported results by relying on box-level avoidance alone.</p>
+  </div>
+</section>
+
+<section id="method" class="wrap">
+  <span class="section-kicker">Method</span>
+  <h2 class="section-title">Hierarchical, density-safe architecture</h2>
+  <p class="section-lede">A box-level density MPC plans each robot's push force and contact offset from only a start and goal pose; a per-robot density NMPC then tracks its assigned, moving contact point on real Go2 whole-body and contact dynamics. Both levels certify safety through the same control-density-function formalism, evaluated against a live, per-step unsafe set that folds in static obstacles and — at the robot level — teammate positions.</p>
+  <figure class="arch-figure zoomable" data-full="assets/figures/architecture.png">
+    <img src="assets/figures/architecture.png" alt="Hierarchical architecture diagram: box-level density MPC, per-robot density NMPC, and whole-body control on real Go2 contact dynamics in MuJoCo.">
+    <figcaption><b>Fig. 1.</b> Hierarchical architecture: box-level density MPC, per-robot density NMPC, and whole-body control on real Go2 contact dynamics in MuJoCo.</figcaption>
+  </figure>
+</section>
+
+<section id="results" class="wrap">
+  <span class="section-kicker">Main Results</span>
+  <h2 class="section-title">The two hardest evaluated scenarios</h2>
+  <p class="section-lede">Both scenarios push a box between two static obstacles at a heading matching the corridor diagonal, inside a closed rectangular boundary wall, on real Unitree Go2 leg-level NMPC and contact dynamics — not a kinematic or single-rigid-body approximation.</p>
+
+  <div class="headline-block">
+    <div class="headline-head">
+      <h3>Dual-quadruped &mdash; N=2 robots, gap D = 1.90&nbsp;m</h3>
+      <span class="stat-pill">clearance 0.00 m &middot; t_conv 37.35 s</span>
+    </div>
+    <div class="headline-media">
+      <figure>
+        <video controls loop muted playsinline poster="assets/figures/case3_tighter_traj.png">
+          <source src="assets/videos/case3_dual_headline_gap_D1.90m.mp4" type="video/mp4">
+        </video>
+        <figcaption>Two Go2 quadrupeds pushing a 0.5&nbsp;m&times;1.2&nbsp;m&times;0.5&nbsp;m, 5&nbsp;kg box through a 1.90&nbsp;m gap between two static obstacles, inside a closed boundary wall.</figcaption>
+      </figure>
+      <div class="headline-side">
+        <figure class="zoomable" data-full="assets/figures/case3_tighter_traj.png">
+          <img src="assets/figures/case3_tighter_traj.png" alt="Dual-quadruped box/robot xy trajectory, start to goal.">
+          <figcaption>Box/robot <i>xy</i> trajectories, start (black dot) to goal (purple cross).</figcaption>
+        </figure>
+      </div>
+    </div>
+    <figure class="zoomable" data-full="assets/figures/case3_filmstrip.png" style="margin-top:16px;">
+      <img src="assets/figures/case3_filmstrip.png" alt="Dual-quadruped filmstrip progression from start to goal.">
+      <figcaption>Filmstrip progression, start (A) to goal (E).</figcaption>
+    </figure>
+    <p class="headline-note">Converges in <b>37.35&nbsp;s</b> with the box's true rotated-footprint clearance at <b>0.00&nbsp;m</b> to the obstacle's physical radius — a graze at the density constraint's own worst-case Minkowski boundary, with no velocity discontinuity at closest approach, confirming a true near-miss rather than a hard collision.</p>
+  </div>
+
+  <div class="headline-block">
+    <div class="headline-head">
+      <h3>Triple-quadruped &mdash; N=3 robots, gap D = 2.49&nbsp;m</h3>
+      <span class="stat-pill">clearance 0.04 m &middot; t_conv 28.92 s</span>
+    </div>
+    <div class="headline-media">
+      <figure>
+        <video controls loop muted playsinline poster="assets/figures/case4_tighter_traj.png">
+          <source src="assets/videos/case4_triple_headline_gap_D2.49m.mp4" type="video/mp4">
+        </video>
+        <figcaption>Three Go2 quadrupeds pushing a heavier T-box through a 2.49&nbsp;m gap between two static obstacles, same corridor-diagonal heading and boundary wall as the dual-quadruped case.</figcaption>
+      </figure>
+      <div class="headline-side">
+        <figure class="zoomable" data-full="assets/figures/case4_tighter_traj.png">
+          <img src="assets/figures/case4_tighter_traj.png" alt="Triple-quadruped box/robot xy trajectory, start to goal.">
+          <figcaption>Box/robot <i>xy</i> trajectories, start (black dot) to goal (purple cross).</figcaption>
+        </figure>
+      </div>
+    </div>
+    <figure class="zoomable" data-full="assets/figures/case4_filmstrip.png" style="margin-top:16px;">
+      <img src="assets/figures/case4_filmstrip.png" alt="Triple-quadruped filmstrip progression from start to goal.">
+      <figcaption>Filmstrip progression, start (A) to goal (E).</figcaption>
+    </figure>
+    <p class="headline-note">Converges in <b>28.92&nbsp;s</b> with clearance <b>0.04&nbsp;m</b> — going from 2 to 3 contacts and a heavier, geometrically distinct T-box required no change to the box-level MPC formulation, only per-scenario contact geometry and inertial parameters.</p>
+  </div>
+
+  <h3 style="margin-top:8px;">Main results table</h3>
+  <div class="table-scroll">
+    <table>
+      <caption>Table I &middot; hardest evaluated scenarios, closed-boundary scene (values from the paper's Table&nbsp;II).</caption>
+      <thead>
+        <tr>
+          <th>Scenario (N)</th>
+          <th class="num">D (m)</th>
+          <th class="num">t<sub>conv</sub> (s)</th>
+          <th class="num">Failed solves (%)</th>
+          <th class="num">&rho;<sub>b,peak</sub></th>
+          <th class="num">Clearance (m)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dual-quadruped (2)</td>
+          <td class="num">1.90</td>
+          <td class="num">37.35</td>
+          <td class="num">37.3</td>
+          <td class="num">20.0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Triple-quadruped (3)</td>
+          <td class="num">2.49</td>
+          <td class="num">28.92</td>
+          <td class="num">40.4</td>
+          <td class="num">20.0</td>
+          <td class="num">0.04</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">"Failed solves" is the fraction of box-level MPC solves that fell back to the last accepted command (not an emergency stop) rather than converging. Clearance is the worst-case distance from the box's true rotated footprint to each obstacle's physical radius over the whole run, not a center-distance proxy.</p>
+
+  <h3 style="margin-top:32px;">Controller-performance ablation</h3>
+  <div class="table-scroll">
+    <table>
+      <caption>Table II &middot; controller performance metrics, computed directly from the logged runs (paper's Table&nbsp;III).</caption>
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th class="num">N (solves)</th>
+          <th class="num">Solve time (ms)</th>
+          <th class="num">Effort/step (N&sup2;m&sup2;)</th>
+          <th class="num">Sep. (m)</th>
+          <th class="num">Pos. RMSE (m)</th>
+          <th class="num">Vel. RMSE (m/s)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dual-quadruped</td>
+          <td class="num">629</td>
+          <td class="num">1546.6 &plusmn; 1013.3</td>
+          <td class="num">891.1 &plusmn; 143.2</td>
+          <td class="num">0.730 &plusmn; 0.012</td>
+          <td class="num">0.0036</td>
+          <td class="num">0.0391</td>
+        </tr>
+        <tr>
+          <td>Triple-quadruped</td>
+          <td class="num">569</td>
+          <td class="num">1637.3 &plusmn; 981.1</td>
+          <td class="num">1250.5 &plusmn; 255.4</td>
+          <td class="num">0.603 &plusmn; 0.007</td>
+          <td class="num">0.0043</td>
+          <td class="num">0.0367</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">Solve time and effort/step are mean&plusmn;SD over genuine box-level MPC solve events (solve time additionally Tukey-fence cleaned). Peak density &rho;<sub>b,peak</sub>&nbsp;=&nbsp;20.0 in both scenarios (reported as a point value, not mean&plusmn;SD, since it is a worst-case bound rather than a typical-case cost). Solve times of order 1&nbsp;s against a 50&nbsp;ms real-time budget are the paper's noted solver-cost limitation.</p>
+
+  <figure class="zoomable" data-full="assets/figures/merged_diagnostic.png" style="margin-top:28px;">
+    <img src="assets/figures/merged_diagnostic.png" alt="Diagnostic panels for both scenarios overlaid: box velocity, robot tracking error, density trace, contact force, yaw, and clearance.">
+    <figcaption><b>Fig. 2.</b> Diagnostic panels, both scenarios overlaid (dual-quadruped red, triple-quadruped blue): (a) box velocity vs. prediction, (b) robot velocity (mean/robot) vs. reference, (c) box position error vs. prediction, (d) robot position error (mean/robot), (e) box density &rho;<sub>b</sub>(t), (f) contact force (mean/robot), commanded vs. realized, (g) box yaw vs. goal heading, (h) box&ndash;obstacle clearance.</figcaption>
+  </figure>
+
+  <figure class="arch-figure zoomable" data-full="assets/figures/scalability_bar.png" style="margin-top:28px;">
+    <img src="assets/figures/scalability_bar.png" alt="Completion time and solve-failed rate versus team size.">
+    <figcaption><b>Fig. 3.</b> Completion time and solve-failed-rate vs. team size. Unlike a comparable learned baseline, where both metrics degrade together past N=3, they move in opposite directions here — evidence this is not an isolated team-size effect.</figcaption>
+  </figure>
+</section>
+
+<section id="gallery" class="wrap">
+  <span class="section-kicker">Scenario Gallery</span>
+  <h2 class="section-title">Additional scenario variants</h2>
+  <p class="section-lede">Beyond the two headline gap-crossing results above, the same architecture was exercised on a range of obstacle layouts and maneuvers, at both team sizes. A curated subset is shown below — near-duplicate parameter sweeps, compressed re-encodes, and scratch/dev-iteration outputs are omitted (see report notes).</p>
+
+  <div class="gallery-group">
+    <h3>Dual-quadruped (N = 2)</h3>
+    <p class="gallery-sub">2 Go2 robots, rectangular box.</p>
+    <div class="gallery-grid">
+      <div class="gallery-card">
+        <video controls loop muted playsinline preload="metadata">
+          <source src="assets/videos/case3_gallery_single_obstacle_uturn.mp4" type="video/mp4">
+        </video>
+        <div class="card-body">
+          <h4>Single obstacle, U-turn avoidance</h4>
+          <p>Canonical single-obstacle demo: a dramatic, controlled U-turn (yaw peaks ~36&deg;) around one obstacle, vs. a full spin (112&deg;) with avoidance disabled.</p>
+          <div class="tag-row"><span class="tag">N=2</span><span class="tag">1 obstacle</span></div>
+        </div>
+      </div>
+      <div class="gallery-card">
+        <video controls loop muted playsinline preload="metadata">
+          <source src="assets/videos/case3_gallery_gap_original.mp4" type="video/mp4">
+        </video>
+        <div class="card-body">
+          <h4>Two-obstacle gap crossing (original)</h4>
+          <p>The original two-obstacle gap demo the headline D=1.90m result was tightened from.</p>
+          <div class="tag-row"><span class="tag">N=2</span><span class="tag">2 obstacles</span></div>
+        </div>
+      </div>
+      <div class="gallery-card">
+        <video controls loop muted playsinline preload="metadata">
+          <source src="assets/videos/case3_gallery_gap_tight_D2.20m.mp4" type="video/mp4">
+        </video>
+        <div class="card-body">
+          <h4>Tighter gap, D = 2.20&nbsp;m</h4>
+          <p>An intermediate gap width between the original and the D=1.90m headline result.</p>
+          <div class="tag-row"><span class="tag">N=2</span><span class="tag">D=2.20m</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-group">
+    <h3>Triple-quadruped (N = 3)</h3>
+    <p class="gallery-sub">3 Go2 robots, heavier T-box.</p>
+    <div class="gallery-grid">
+      <div class="gallery-card">
+        <video controls loop muted playsinline preload="metadata">
+          <source src="assets/videos/case4_gallery_single_obstacle.mp4" type="video/mp4">
+        </video>
+        <div class="card-body">
+          <h4>Single obstacle demo</h4>
+          <p>Three-robot team pushing the T-box past one static obstacle.</p>
+          <div class="tag-row"><span class="tag">N=3</span><span class="tag">1 obstacle</span></div>
+        </div>
+      </div>
+      <div class="gallery-card">
+        <video controls loop muted playsinline preload="metadata">
+          <source src="assets/videos/case4_gallery_gap_D2.89m.mp4" type="video/mp4">
+        </video>
+        <div class="card-body">
+          <h4>Wider gap, D = 2.89&nbsp;m</h4>
+          <p>The wider precursor gap the D=2.49m headline result was later tightened (~14%) from.</p>
+          <div class="tag-row"><span class="tag">N=3</span><span class="tag">D=2.89m</span></div>
+        </div>
+      </div>
+      <div class="gallery-card">
+        <video controls loop muted playsinline preload="metadata">
+          <source src="assets/videos/case4_gallery_gap_and_turn.mp4" type="video/mp4">
+        </video>
+        <div class="card-body">
+          <h4>Gap crossing + large turn</h4>
+          <p>Gap-crossing geometry combined with an additional large heading change en route to goal.</p>
+          <div class="tag-row"><span class="tag">N=3</span><span class="tag">gap + turn</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="baseline" class="wrap">
+  <span class="section-kicker">Baseline Comparison</span>
+  <h2 class="section-title">vs. a classical RRT*-plus-tracking baseline</h2>
+  <p class="section-lede">An RRT* path is planned once per scenario, inflated by the box's footprint and obstacle radius plus a safety pad, then converted to a pure-pursuit reference fed to the <i>same</i> box- and robot-level MPCs with density-avoidance disabled — obstacle avoidance delegated entirely to the planned path, as in a conventional plan-then-track pipeline.</p>
+
+  <div class="baseline-grid">
+    <div class="baseline-card">
+      <video controls loop muted playsinline preload="metadata">
+        <source src="assets/videos/baseline_rrt_case3_gap_and_turn.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <h4>RRT*+tracking, dual-quadruped</h4>
+        <p>Gap-and-turn scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled).</p>
+      </div>
+    </div>
+    <div class="baseline-card">
+      <video controls loop muted playsinline preload="metadata">
+        <source src="assets/videos/baseline_rrt_case4_gap_and_turn.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <h4>RRT*+tracking, triple-quadruped</h4>
+        <p>Gap-and-turn scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <caption>Table III &middot; ours vs. RRT*-plus-tracking baseline, on the headline gap scenarios (paper's Table&nbsp;IV).</caption>
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Method</th>
+          <th>Reached goal</th>
+          <th class="num">Compl. time (s)</th>
+          <th class="num">Dist. cov. (%)</th>
+          <th class="num">Zero-force steps (%)</th>
+          <th>Yaw drift (deg)</th>
+          <th class="num">Min box&ndash;obs. (m)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">Dual-quad.</td>
+          <td>Ours</td>
+          <td>yes</td>
+          <td class="num">37.35</td>
+          <td class="num">100</td>
+          <td class="num">&mdash;</td>
+          <td>&mdash;</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>RRT* baseline</td>
+          <td>no</td>
+          <td class="num">&mdash;</td>
+          <td class="num">37.8</td>
+          <td class="num">8.1</td>
+          <td>&minus;47.3 to 10.5</td>
+          <td class="num">0.50</td>
+        </tr>
+        <tr>
+          <td rowspan="2">Triple-quad.</td>
+          <td>Ours</td>
+          <td>yes</td>
+          <td class="num">28.92</td>
+          <td class="num">100</td>
+          <td class="num">&mdash;</td>
+          <td>&mdash;</td>
+          <td class="num">0.04</td>
+        </tr>
+        <tr>
+          <td>RRT* baseline</td>
+          <td>no</td>
+          <td class="num">&mdash;</td>
+          <td class="num">41.4</td>
+          <td class="num">45.4</td>
+          <td>&minus;67.6 to 0.3</td>
+          <td class="num">0.51</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <b>Note on the videos above:</b> the numeric comparison in Table III is measured on each case's headline D=1.90m / D=2.49m gap scenario. The repository's rendered RRT*-baseline videos cover the <i>gap-and-turn</i> variant rather than the exact headline gap geometry (a headline-gap RRT* run exists only as a short, video-less smoke test in the source repo) — shown here as the closest available like-for-like illustration of the baseline's failure mode: commanded forces collapsing toward zero on every robot simultaneously while heading drifts continuously rather than settling.</div>
+</section>
+
+<section id="limitations" class="wrap">
+  <span class="section-kicker">Limitations</span>
+  <h2 class="section-title">A genuine, reported limitation</h2>
+  <div class="limitation-box">
+    <p>The per-robot leg-level NMPC's own copy of the density constraint, layered on top of the box-level avoidance already enforced by the box density, was found to <b>destabilize the whole-body controller</b> under the asymmetric push-force regime that a fixed-lever-arm, push-only actuation model produces — independent of obstacle proximity. This was resolved for all reported results by disabling the robot-level constraint and relying on box-level avoidance alone, which already satisfies the paper's safety requirement for these scenarios.</p>
+    <p>A component-level ablation (constraint enabled vs. disabled) shows the effect is scenario-dependent: enabling the redundant constraint is fatal for the dual-quadruped scenario at both gap widths tested (a robot falls at 37&ndash;41% of the way to the goal), but has no observable effect on the triple-quadruped scenario, which converges identically either way — consistent with the 2-contact geometry producing a more extreme force asymmetry than the 3-contact geometry does.</p>
+    <div class="table-scroll" style="margin-top:16px;">
+      <table>
+        <caption>Table IV &middot; leg-level density constraint, enabled vs. disabled (paper's Table&nbsp;III / Section IV.C).</caption>
+        <thead>
+          <tr><th>Scenario</th><th>Constraint enabled</th><th>Constraint disabled (ours)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Dual-quad., D=2.20m</td><td>fall, t=17.55s (39%)</td><td>converges, t=31.93s</td></tr>
+          <tr><td>Dual-quad., D=1.90m</td><td>fall, t=37.88s (40%)</td><td>converges, t=37.35s</td></tr>
+          <tr><td>Triple-quad., D=2.49m</td><td>converges, t=28.92s</td><td>converges, t=28.92s</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:14px;">Extending the position-only density floor to the box level, and re-deriving the robot-level constraint to compose safely with an asymmetric push-force regime by construction rather than by disabling it, are identified as necessary next steps before the framework can be claimed safe under arbitrary obstacle placement.</p>
+  </div>
+</section>
+
+<section id="bibtex" class="wrap">
+  <span class="section-kicker">Citation</span>
+  <h2 class="section-title">BibTeX</h2>
+  <div class="bibtex-wrap">
+    <button class="copy-btn" onclick="copyBibtex(this)">Copy</button>
+    <pre class="bibtex" id="bibtex-block">@inproceedings{jagannath2027densitygo2,
+  title     = {Collaborative Manipulation Using Density Functions on the Unitree Go2},
+  author    = {Jagannath and Narayanan, Sriram S.K.S and Vaidya, Umesh},
+  booktitle = {American Control Conference (ACC)},
+  year      = {2027},
+  address   = {Clemson University, Clemson, SC, USA}
+}</pre>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Project page built for the ACC 2027 submission &middot; <a href="assets/ACC2027_initial.pdf">Paper PDF</a></p>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="Close" onclick="closeLightbox()">&times;</button>
+  <div id="lightbox-content"></div>
+</div>
+
+<script>
+function copyBibtex(btn) {
+  var text = document.getElementById('bibtex-block').innerText;
+  navigator.clipboard.writeText(text).then(function () {
+    var old = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function () { btn.textContent = old; }, 1500);
+  });
+}
+
+function openLightbox(src) {
+  var lb = document.getElementById('lightbox');
+  var content = document.getElementById('lightbox-content');
+  content.innerHTML = '<img src="' + src + '" alt="">';
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox-content').innerHTML = '';
+}
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.zoomable').forEach(function (fig) {
+    fig.addEventListener('click', function () {
+      openLightbox(fig.getAttribute('data-full'));
+    });
+  });
+  document.getElementById('lightbox').addEventListener('click', function (e) {
+    if (e.target.id === 'lightbox') closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+});
+</script>
+
+</body>
+</html>
