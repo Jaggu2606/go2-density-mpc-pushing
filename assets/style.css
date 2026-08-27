@@ -113,6 +113,12 @@ a:hover { color: var(--accent); }
   font-weight: 600;
 }
 .topnav nav a:hover { color: var(--accent-dark); }
+.nav-disabled {
+  color: var(--text-muted);
+  font-weight: 600;
+  opacity: 0.55;
+  cursor: default;
+}
 
 /* ---------- Hero ---------- */
 .hero {
