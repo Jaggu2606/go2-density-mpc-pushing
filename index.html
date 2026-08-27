@@ -18,8 +18,6 @@
       <a href="#results">Results</a>
       <a href="#gallery">Gallery</a>
       <a href="#baseline">Baseline</a>
-      <a href="#limitations">Limitations</a>
-      <a href="#bibtex">BibTeX</a>
     </nav>
   </div>
 </div>
@@ -29,12 +27,11 @@
   <h1>Collaborative Manipulation Using Density Functions on the Unitree&nbsp;Go2</h1>
   <p class="authors">Jagannath &nbsp;&middot;&nbsp; Sriram S.K.S Narayanan &nbsp;&middot;&nbsp; Umesh Vaidya</p>
   <p class="affiliation">Department of Mechanical Engineering, Clemson University, Clemson, SC, USA</p>
-  <span class="venue">ACC 2027 &middot; Submission</span>
   <div class="link-row">
-    <a class="btn primary" href="assets/ACC2027_initial.pdf">📄 Paper (PDF)</a>
+    <span class="btn" aria-disabled="true" style="opacity:0.6; cursor:default;">📄 Paper (coming soon)</span>
+    <span class="btn" aria-disabled="true" style="opacity:0.6; cursor:default;">💻 Code (coming soon)</span>
     <a class="btn" href="#results">▶ Results</a>
     <a class="btn" href="#gallery">🎞 Video Gallery</a>
-    <a class="btn" href="#bibtex">❝ Cite</a>
   </div>
 </header>
 
@@ -369,48 +366,11 @@
     <b>Note on the videos above:</b> the numeric comparison in Table III is measured on each case's headline D=1.90m / D=2.49m gap scenario. The repository's rendered RRT*-baseline videos cover the <i>gap-and-turn</i> variant rather than the exact headline gap geometry (a headline-gap RRT* run exists only as a short, video-less smoke test in the source repo) — shown here as the closest available like-for-like illustration of the baseline's failure mode: commanded forces collapsing toward zero on every robot simultaneously while heading drifts continuously rather than settling.</div>
 </section>
 
-<section id="limitations" class="wrap">
-  <span class="section-kicker">Limitations</span>
-  <h2 class="section-title">A genuine, reported limitation</h2>
-  <div class="limitation-box">
-    <p>The per-robot leg-level NMPC's own copy of the density constraint, layered on top of the box-level avoidance already enforced by the box density, was found to <b>destabilize the whole-body controller</b> under the asymmetric push-force regime that a fixed-lever-arm, push-only actuation model produces — independent of obstacle proximity. This was resolved for all reported results by disabling the robot-level constraint and relying on box-level avoidance alone, which already satisfies the paper's safety requirement for these scenarios.</p>
-    <p>A component-level ablation (constraint enabled vs. disabled) shows the effect is scenario-dependent: enabling the redundant constraint is fatal for the dual-quadruped scenario at both gap widths tested (a robot falls at 37&ndash;41% of the way to the goal), but has no observable effect on the triple-quadruped scenario, which converges identically either way — consistent with the 2-contact geometry producing a more extreme force asymmetry than the 3-contact geometry does.</p>
-    <div class="table-scroll" style="margin-top:16px;">
-      <table>
-        <caption>Table IV &middot; leg-level density constraint, enabled vs. disabled (paper's Table&nbsp;III / Section IV.C).</caption>
-        <thead>
-          <tr><th>Scenario</th><th>Constraint enabled</th><th>Constraint disabled (ours)</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Dual-quad., D=2.20m</td><td>fall, t=17.55s (39%)</td><td>converges, t=31.93s</td></tr>
-          <tr><td>Dual-quad., D=1.90m</td><td>fall, t=37.88s (40%)</td><td>converges, t=37.35s</td></tr>
-          <tr><td>Triple-quad., D=2.49m</td><td>converges, t=28.92s</td><td>converges, t=28.92s</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="margin-top:14px;">Extending the position-only density floor to the box level, and re-deriving the robot-level constraint to compose safely with an asymmetric push-force regime by construction rather than by disabling it, are identified as necessary next steps before the framework can be claimed safe under arbitrary obstacle placement.</p>
-  </div>
-</section>
-
-<section id="bibtex" class="wrap">
-  <span class="section-kicker">Citation</span>
-  <h2 class="section-title">BibTeX</h2>
-  <div class="bibtex-wrap">
-    <button class="copy-btn" onclick="copyBibtex(this)">Copy</button>
-    <pre class="bibtex" id="bibtex-block">@inproceedings{jagannath2027densitygo2,
-  title     = {Collaborative Manipulation Using Density Functions on the Unitree Go2},
-  author    = {Jagannath and Narayanan, Sriram S.K.S and Vaidya, Umesh},
-  booktitle = {American Control Conference (ACC)},
-  year      = {2027},
-  address   = {Clemson University, Clemson, SC, USA}
-}</pre>
-  </div>
-</section>
 
 </main>
 
 <footer class="wrap">
-  <p>Project page built for the ACC 2027 submission &middot; <a href="assets/ACC2027_initial.pdf">Paper PDF</a></p>
+  <p>Paper and code coming soon.</p>
 </footer>
 
 <div class="lightbox" id="lightbox">
@@ -419,15 +379,6 @@
 </div>
 
 <script>
-function copyBibtex(btn) {
-  var text = document.getElementById('bibtex-block').innerText;
-  navigator.clipboard.writeText(text).then(function () {
-    var old = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(function () { btn.textContent = old; }, 1500);
-  });
-}
-
 function openLightbox(src) {
   var lb = document.getElementById('lightbox');
   var content = document.getElementById('lightbox-content');
