@@ -240,8 +240,8 @@
         </video>
         <div class="card-body">
           <h4>Two-obstacle gap crossing</h4>
-          <p>The original two-obstacle gap demo the headline D=1.90m result was tightened from.</p>
-          <div class="tag-row"><span class="tag">N=2</span><span class="tag">2 obstacles</span></div>
+          <p>The original two-obstacle gap demo the headline D=1.90m result was tightened from, rerun with a closed perimeter wall around the arena.</p>
+          <div class="tag-row"><span class="tag">N=2</span><span class="tag">2 obstacles</span><span class="tag">walled</span></div>
         </div>
       </div>
       <div class="gallery-card">
@@ -297,8 +297,8 @@
         </video>
         <div class="card-body">
           <h4>Wider gap, D = 2.89&nbsp;m</h4>
-          <p>The wider precursor gap the D=2.49m headline result was later tightened (~14%) from.</p>
-          <div class="tag-row"><span class="tag">N=3</span><span class="tag">D=2.89m</span></div>
+          <p>The wider precursor gap the D=2.49m headline result was later tightened (~14%) from, rerun with a closed perimeter wall around the arena.</p>
+          <div class="tag-row"><span class="tag">N=3</span><span class="tag">D=2.89m</span><span class="tag">walled</span></div>
         </div>
       </div>
       <div class="gallery-card">
@@ -343,20 +343,20 @@
   <div class="baseline-grid">
     <div class="baseline-card">
       <video controls loop muted playsinline preload="metadata">
-        <source src="assets/videos/baseline_rrt_case3_gap_and_turn.mp4" type="video/mp4">
+        <source src="assets/videos/baseline_rrt_case3_gap_tighter.mp4" type="video/mp4">
       </video>
       <div class="card-body">
         <h4>RRT*+tracking, dual-quadruped</h4>
-        <p>Gap-and-turn scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled).</p>
+        <p>Headline D=1.90&nbsp;m gap scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled) &mdash; the exact geometry Table III's numbers are measured on.</p>
       </div>
     </div>
     <div class="baseline-card">
       <video controls loop muted playsinline preload="metadata">
-        <source src="assets/videos/baseline_rrt_case4_gap_and_turn.mp4" type="video/mp4">
+        <source src="assets/videos/baseline_rrt_case4_gap_tighter.mp4" type="video/mp4">
       </video>
       <div class="card-body">
         <h4>RRT*+tracking, triple-quadruped</h4>
-        <p>Gap-and-turn scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled).</p>
+        <p>Headline D=2.49&nbsp;m gap scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled) &mdash; the exact geometry Table III's numbers are measured on.</p>
       </div>
     </div>
   </div>
@@ -419,7 +419,7 @@
     </table>
   </div>
   <div class="callout">
-    <b>Note on the videos above:</b> the numeric comparison in Table III is measured on each case's headline D=1.90m / D=2.49m gap scenario. The repository's rendered RRT*-baseline videos cover the <i>gap-and-turn</i> variant rather than the exact headline gap geometry (a headline-gap RRT* run exists only as a short, video-less smoke test in the source repo) — shown here as the closest available like-for-like illustration of the baseline's failure mode: commanded forces collapsing toward zero on every robot simultaneously while heading drifts continuously rather than settling.</div>
+    <b>Note on the videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry Table III's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling.</div>
 </section>
 
 
