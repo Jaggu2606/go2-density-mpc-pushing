@@ -180,6 +180,7 @@ a:hover { color: var(--accent); }
   flex-wrap: wrap;
   margin: 26px 0 8px;
 }
+.hero .section-kicker { text-align: center; }
 .contrib-list {
   text-align: justify;
   text-align-last: left;
