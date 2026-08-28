@@ -113,12 +113,6 @@ a:hover { color: var(--accent); }
   font-weight: 600;
 }
 .topnav nav a:hover { color: var(--accent-dark); }
-.nav-disabled {
-  color: var(--text-muted);
-  font-weight: 600;
-  opacity: 0.55;
-  cursor: default;
-}
 
 /* ---------- Hero ---------- */
 .hero {
@@ -252,8 +246,7 @@ h2.section-title {
 }
 .section-lede {
   color: var(--text-muted);
-  max-width: 720px;
-  margin: 0 auto 28px;
+  margin: 0 0 28px;
   text-align: center;
 }
 
