@@ -181,7 +181,8 @@ a:hover { color: var(--accent); }
   margin: 26px 0 8px;
 }
 .contrib-list {
-  text-align: left;
+  text-align: justify;
+  text-align-last: left;
   max-width: 760px;
   margin: 14px auto 8px;
   padding-left: 22px;
