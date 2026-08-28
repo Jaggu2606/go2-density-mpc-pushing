@@ -232,7 +232,7 @@ h2.section-title {
   font-weight: 800;
   margin: 0 0 6px;
   letter-spacing: -0.01em;
-  text-align: center;
+  text-align: left;
 }
 .section-kicker {
   display: block;
@@ -242,7 +242,7 @@ h2.section-title {
   text-transform: uppercase;
   color: var(--accent-dark);
   margin-bottom: 8px;
-  text-align: center;
+  text-align: left;
 }
 .section-lede {
   color: var(--text-muted);
