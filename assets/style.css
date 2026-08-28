@@ -238,6 +238,7 @@ h2.section-title {
   font-weight: 800;
   margin: 0 0 6px;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 .section-kicker {
   display: block;
@@ -247,11 +248,13 @@ h2.section-title {
   text-transform: uppercase;
   color: var(--accent-dark);
   margin-bottom: 8px;
+  text-align: center;
 }
 .section-lede {
   color: var(--text-muted);
   max-width: 720px;
-  margin: 0 0 28px;
+  margin: 0 auto 28px;
+  text-align: center;
 }
 
 /* ---------- Abstract ---------- */
