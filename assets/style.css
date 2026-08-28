@@ -247,7 +247,7 @@ h2.section-title {
 .section-lede {
   color: var(--text-muted);
   margin: 0 0 28px;
-  text-align: center;
+  text-align: left;
 }
 
 /* ---------- Abstract ---------- */
