@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collaborative Manipulation Using Density Functions on the Unitree Go2</title>
+<title>Safe Multi-agent Collaborative Manipulation for Robotic Systems Using Density Functions</title>
 <meta name="description" content="A hierarchical, density-safe framework for multi-quadruped collaborative box pushing, validated on Unitree Go2 dynamics in MuJoCo.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
@@ -18,13 +18,14 @@
       <a href="#results">Results</a>
       <a href="#gallery">Gallery</a>
       <a href="#baseline">Baseline</a>
+      <a href="#gait-sync">Gait Sync</a>
     </nav>
   </div>
 </div>
 
 <a id="top"></a>
 <header class="hero wrap">
-  <h1>Collaborative Manipulation Using Density Functions on the Unitree&nbsp;Go2</h1>
+  <h1>Safe Multi-agent Collaborative Manipulation for Robotic Systems Using Density Functions</h1>
   <p class="authors">Jagannath &nbsp;&middot;&nbsp; Sriram S.K.S Narayanan &nbsp;&middot;&nbsp; Umesh Vaidya</p>
   <p class="affiliation">Department of Mechanical Engineering, Clemson University, Clemson, SC, USA</p>
   <div class="hero-videos">
@@ -45,7 +46,7 @@
   <ul class="contrib-list">
     <li>We extend Rigo et al.'s hierarchical contact-optimization architecture from a single robot to a team, replacing its externally supplied reference trajectory with a density-transport constraint given only a start and goal pose.</li>
     <li>We unify box-level and robot-level obstacle and inter-agent avoidance under one control density function formalism, threaded through as online parameters updated every control step.</li>
-    <li>We validate on real Unitree Go2 contact dynamics in MuJoCo, on the two hardest scenarios (dual- and triple-quadruped teams), against a rotated-footprint clearance check, a controller-performance ablation, and a classical RRT*-plus-tracking baseline.</li>
+    <li>We validate on real Unitree Go2 contact dynamics in MuJoCo, on the two hardest scenarios (dual- and triple-quadruped teams), against a rotated-footprint clearance check, a controller-performance ablation, a Control Barrier Function (CBF) baseline, and a classical RRT*-plus-tracking baseline.</li>
   </ul>
   <div class="link-row">
     <span class="btn" aria-disabled="true" style="opacity:0.6; cursor:default;">
@@ -66,29 +67,29 @@
   <h2 class="section-title">Density-safe loco-manipulation, for a team</h2>
   <div class="abstract-card">
     <p>This paper presents a hierarchical, density-safe framework for collaborative loco-manipulation, extending a single-robot contact-optimization architecture to a team of <strong>N</strong> quadrupedal robots pushing a shared box to a goal pose. A box-level MPC solves for each robot's push force and fixed contact offset under a control-density-transport constraint on the box's own pose, requiring only a start and goal pose rather than an externally supplied reference trajectory, with a static-obstacle term folded into the same density so the box's path is collision-aware by construction. At the robot level, each quadruped's own whole-body MPC tracks its assigned contact point while enforcing a second density constraint, threaded through as online parameters so that both a moving contact point and a teammate's current position are accounted for every control step.</p>
-    <p>The framework is validated on real Unitree Go2 contact and whole-body dynamics in MuJoCo, on the two hardest scenarios evaluated: two robots pushing a box through a <strong>1.90&nbsp;m</strong> gap between static obstacles, and three robots pushing a heavier T-box through a <strong>2.49&nbsp;m</strong> gap. Both scenarios converge to the goal pose with the box's true rotated-footprint clearance to each obstacle at or near zero margin — consistent with operating at the density constraint's own worst-case Minkowski boundary rather than with margin to spare — and both expose a classical RRT*-plus-tracking baseline, using the identical underlying MPCs with density avoidance disabled, failing to reach the goal in either case. A genuine limitation is also reported: the robot-level density constraint, layered on an already force-asymmetric push regime, was found to destabilize the whole-body controller independent of obstacle proximity, resolved for the reported results by relying on box-level avoidance alone.</p>
+    <p>The framework is validated on real Unitree Go2 contact and whole-body dynamics in MuJoCo, on the two hardest scenarios evaluated: two robots pushing a box through a <strong>1.90&nbsp;m</strong> gap between static obstacles, and three robots pushing a heavier T-box through a <strong>2.49&nbsp;m</strong> gap, with both levels of the density constraint active together. Both scenarios converge to the goal pose with the box's true rotated-footprint clearance to each obstacle at or near zero margin — consistent with operating at the density constraint's own worst-case Minkowski boundary rather than with margin to spare — and both expose a classical RRT*-plus-tracking baseline, using the identical underlying MPCs with density avoidance disabled, failing to reach the goal in either case. A Control Barrier Function (CBF) baseline run through the identical pipeline also reaches the goal, 29% slower and with a substantially higher solve-failure rate than the density constraint.</p>
   </div>
 </section>
 
 <section id="method" class="wrap">
   <span class="section-kicker">Method</span>
   <h2 class="section-title">Hierarchical, density-safe architecture</h2>
-  <p class="section-lede">A box-level density MPC plans each robot's push force and contact offset from only a start and goal pose; a per-robot density NMPC then tracks its assigned, moving contact point on real Go2 whole-body and contact dynamics. Both levels certify safety through the same control-density-function formalism, evaluated against a live, per-step unsafe set that folds in static obstacles and — at the robot level — teammate positions.</p>
-  <figure class="arch-figure zoomable" data-full="assets/figures/architecture.png">
-    <img src="assets/figures/architecture.png" alt="Hierarchical architecture diagram: box-level density MPC, per-robot density NMPC, and whole-body control on real Go2 contact dynamics in MuJoCo.">
-    <figcaption><b>Fig. 1.</b> Hierarchical architecture: box-level density MPC, per-robot density NMPC, and whole-body control on real Go2 contact dynamics in MuJoCo.</figcaption>
+  <p class="section-lede">A box-level density MPC plans each robot's push force and contact offset from only a start and goal pose; a robot-level density NMPC then tracks its assigned, moving contact point on real Go2 whole-body and contact dynamics. Both levels certify safety through the same control-density-function formalism, evaluated against a live, per-step unsafe set that folds in static obstacles and — at the robot level — teammate positions.</p>
+  <figure class="arch-figure zoomable" data-full="assets/figures/framework_fig.png">
+    <img src="assets/figures/framework_fig.png" alt="Hierarchical architecture diagram: box-level density MPC, robot-level density NMPC, and whole-body control on real Go2 contact dynamics in MuJoCo.">
+    <figcaption><b>Fig. 1.</b> Hierarchical architecture: box-level density MPC, robot-level density NMPC, and whole-body control on real Go2 contact dynamics in MuJoCo.</figcaption>
   </figure>
 </section>
 
 <section id="results" class="wrap">
   <span class="section-kicker">Main Results</span>
   <h2 class="section-title">The two hardest evaluated scenarios</h2>
-  <p class="section-lede">Both scenarios push a box between two static obstacles at a heading matching the corridor diagonal, inside a closed rectangular boundary wall, on real Unitree Go2 leg-level NMPC and contact dynamics — not a kinematic or single-rigid-body approximation.</p>
+  <p class="section-lede">Both scenarios push a box between two static obstacles at a heading matching the corridor diagonal, inside a closed rectangular boundary wall, on real Unitree Go2 robot-level NMPC and contact dynamics — not a kinematic or single-rigid-body approximation.</p>
 
   <div class="headline-block">
     <div class="headline-head">
       <h3>Dual-quadruped &mdash; N=2 robots, gap D = 1.90&nbsp;m</h3>
-      <span class="stat-pill">clearance 0.00 m &middot; t_conv 37.35 s</span>
+      <span class="stat-pill">clearance 0.02 m &middot; t_conv 38.50 s</span>
     </div>
     <div class="headline-media">
       <figure>
@@ -108,7 +109,7 @@
       <img src="assets/figures/case3_filmstrip.png" alt="Dual-quadruped filmstrip progression from start to goal.">
       <figcaption>Filmstrip progression, start (A) to goal (E).</figcaption>
     </figure>
-    <p class="headline-note">Converges in <b>37.35&nbsp;s</b> with the box's true rotated-footprint clearance at <b>0.00&nbsp;m</b> to the obstacle's physical radius — a graze at the density constraint's own worst-case Minkowski boundary, with no velocity discontinuity at closest approach, confirming a true near-miss rather than a hard collision.</p>
+    <p class="headline-note">Converges in <b>38.50&nbsp;s</b> with the box's true rotated-footprint clearance at <b>0.02&nbsp;m</b> to the obstacle's physical radius — a graze at the density constraint's own worst-case Minkowski boundary, with no velocity discontinuity at closest approach, confirming a true near-miss rather than a hard collision. Both the box-level and robot-level density constraints are active for this result.</p>
   </div>
 
   <div class="headline-block">
@@ -140,7 +141,7 @@
   <h3 style="margin-top:8px;">Main results table</h3>
   <div class="table-scroll">
     <table>
-      <caption>Table I &middot; hardest evaluated scenarios, closed-boundary scene (values from the paper's Table&nbsp;II).</caption>
+      <caption>Table I &middot; hardest evaluated scenarios, closed-boundary scene (values from the paper's Table&nbsp;I, t<sub>conv</sub>/failed solves from Table&nbsp;III's enabled column).</caption>
       <thead>
         <tr>
           <th>Scenario (N)</th>
@@ -155,10 +156,10 @@
         <tr>
           <td>Dual-quadruped (2)</td>
           <td class="num">1.90</td>
-          <td class="num">37.35</td>
-          <td class="num">37.3</td>
+          <td class="num">38.50</td>
+          <td class="num">35.4</td>
           <td class="num">20.0</td>
-          <td class="num">0.00</td>
+          <td class="num">0.02</td>
         </tr>
         <tr>
           <td>Triple-quadruped (3)</td>
@@ -176,7 +177,7 @@
   <h3 style="margin-top:32px;">Controller-performance ablation</h3>
   <div class="table-scroll">
     <table>
-      <caption>Table II &middot; controller performance metrics, computed directly from the logged runs (paper's Table&nbsp;III).</caption>
+      <caption>Table II &middot; controller performance metrics, computed directly from the logged runs (paper's Table&nbsp;II).</caption>
       <thead>
         <tr>
           <th>Scenario</th>
@@ -191,12 +192,12 @@
       <tbody>
         <tr>
           <td>Dual-quadruped</td>
-          <td class="num">629</td>
-          <td class="num">1546.6 &plusmn; 1013.3</td>
-          <td class="num">891.1 &plusmn; 143.2</td>
-          <td class="num">0.730 &plusmn; 0.012</td>
-          <td class="num">0.0036</td>
-          <td class="num">0.0391</td>
+          <td class="num">760</td>
+          <td class="num">1543.2 &plusmn; 909.3</td>
+          <td class="num">887.7 &plusmn; 145.9</td>
+          <td class="num">0.708 &plusmn; 0.041</td>
+          <td class="num">0.0038</td>
+          <td class="num">0.0388</td>
         </tr>
         <tr>
           <td>Triple-quadruped</td>
@@ -212,15 +213,76 @@
   </div>
   <p class="table-note">Solve time and effort/step are mean&plusmn;SD over genuine box-level MPC solve events (solve time additionally Tukey-fence cleaned). Peak density &rho;<sub>b,peak</sub>&nbsp;=&nbsp;20.0 in both scenarios (reported as a point value, not mean&plusmn;SD, since it is a worst-case bound rather than a typical-case cost). Solve times of order 1&nbsp;s against a 50&nbsp;ms real-time budget are the paper's noted solver-cost limitation.</p>
 
-  <figure class="zoomable" data-full="assets/figures/merged_diagnostic.png" style="margin-top:28px;">
-    <img src="assets/figures/merged_diagnostic.png" alt="Diagnostic panels for both scenarios overlaid: box velocity, robot tracking error, density trace, contact force, yaw, and clearance.">
-    <figcaption><b>Fig. 2.</b> Diagnostic panels, both scenarios overlaid (dual-quadruped red, triple-quadruped blue): (a) box velocity vs. prediction, (b) robot velocity (mean/robot) vs. reference, (c) box position error vs. prediction, (d) robot position error (mean/robot), (e) box density &rho;<sub>b</sub>(t), (f) contact force (mean/robot), commanded vs. realized, (g) box yaw vs. goal heading, (h) box&ndash;obstacle clearance.</figcaption>
+  <figure class="zoomable" data-full="assets/figures/merged_diagnostic_wide.png" style="margin-top:28px;">
+    <img src="assets/figures/merged_diagnostic_wide.png" alt="Diagnostic panels for both scenarios overlaid: box velocity, robot tracking error, density trace, contact force, yaw, and clearance.">
+    <figcaption><b>Fig. 2.</b> Diagnostic panels, both scenarios overlaid (dual-quadruped red, triple-quadruped blue), both with the robot-level density constraint enabled: (a) box velocity vs. prediction, (b) robot velocity (mean/robot) vs. reference, (c) box position error vs. prediction, (d) robot position error (mean/robot), (e) box density &rho;<sub>b</sub>(t), (f) contact force (mean/robot), commanded vs. realized, (g) box yaw vs. goal heading, (h) box&ndash;obstacle clearance.</figcaption>
   </figure>
 
-  <figure class="arch-figure zoomable" data-full="assets/figures/scalability_bar.png" style="margin-top:28px;">
-    <img src="assets/figures/scalability_bar.png" alt="Completion time and solve-failed rate versus team size.">
-    <figcaption><b>Fig. 3.</b> Completion time and solve-failed-rate vs. team size. Unlike a comparable learned baseline, where both metrics degrade together past N=3, they move in opposite directions here — evidence this is not an isolated team-size effect.</figcaption>
-  </figure>
+  <h3 style="margin-top:32px;">Robot-level density constraint ablation</h3>
+  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled (used for every other result on this page); an extra active safety constraint is not free, so solve time, solve-failure rate, and separation shift slightly rather than uniformly improving.</p>
+  <div class="table-scroll">
+    <table>
+      <caption>Table III &middot; robot-level density constraint, enabled vs. disabled, full cost comparison (paper's Table&nbsp;III).</caption>
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Constraint</th>
+          <th class="num">Compl. (s)</th>
+          <th class="num">Solve (ms)</th>
+          <th class="num">Solve-failed (%)</th>
+          <th class="num">Sep. (m)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">Dual, D=2.20m</td>
+          <td>disabled</td>
+          <td class="num">31.93</td>
+          <td class="num">917.7 &plusmn; 548.1</td>
+          <td class="num">29.6</td>
+          <td class="num">0.729 &plusmn; 0.009</td>
+        </tr>
+        <tr>
+          <td>enabled (Ours)</td>
+          <td class="num">31.44</td>
+          <td class="num">1270.4 &plusmn; 755.9</td>
+          <td class="num">29.4</td>
+          <td class="num">0.723 &plusmn; 0.018</td>
+        </tr>
+        <tr>
+          <td rowspan="2">Dual, D=1.90m</td>
+          <td>disabled</td>
+          <td class="num">37.35</td>
+          <td class="num">1546.6 &plusmn; 1013.3</td>
+          <td class="num">37.3</td>
+          <td class="num">0.730 &plusmn; 0.012</td>
+        </tr>
+        <tr>
+          <td>enabled (Ours)</td>
+          <td class="num">38.50</td>
+          <td class="num">1543.2 &plusmn; 909.3</td>
+          <td class="num">35.4</td>
+          <td class="num">0.708 &plusmn; 0.041</td>
+        </tr>
+        <tr>
+          <td rowspan="2">Triple, D=2.49m</td>
+          <td>disabled</td>
+          <td class="num">28.16</td>
+          <td class="num">2548.5 &plusmn; 1887.2</td>
+          <td class="num">38.1</td>
+          <td class="num">0.605 &plusmn; 0.003</td>
+        </tr>
+        <tr>
+          <td>enabled (Ours)</td>
+          <td class="num">28.92</td>
+          <td class="num">2431.1 &plusmn; 1486.5</td>
+          <td class="num">40.4</td>
+          <td class="num">0.603 &plusmn; 0.007</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">The enabled rows also show completion time and solve-failed rate moving oppositely with team size (38.50s / 35.4% at N=2 against 28.92s / 40.4% at N=3), not an isolated team-size effect.</p>
 </section>
 
 <section id="gallery" class="wrap">
@@ -345,17 +407,26 @@
 
 <section id="baseline" class="wrap">
   <span class="section-kicker">Baseline Comparison</span>
-  <h2 class="section-title">vs. a classical RRT*-plus-tracking baseline</h2>
-  <p class="section-lede">An RRT* path is planned once per scenario, inflated by the box's footprint and obstacle radius plus a safety pad, then converted to a pure-pursuit reference fed to the <i>same</i> box- and robot-level MPCs with density-avoidance disabled — obstacle avoidance delegated entirely to the planned path, as in a conventional plan-then-track pipeline.</p>
+  <h2 class="section-title">vs. a CBF baseline and a classical RRT*-plus-tracking baseline</h2>
+  <p class="section-lede">Two baselines are run through the identical pipeline. A Control Barrier Function (CBF) baseline swaps the box-level MPC's density constraint for one discrete-time CBF constraint per obstacle (same dynamics, cost, and fixed contact offsets), tested on the dual-quadruped scenario. An RRT* path is planned once per scenario, inflated by the box's footprint and obstacle radius plus a safety pad, then converted to a pure-pursuit reference fed to the <i>same</i> box- and robot-level MPCs with density avoidance disabled &mdash; obstacle avoidance delegated entirely to the planned path, as in a conventional plan-then-track pipeline.</p>
 
   <div class="baseline-grid">
+    <div class="baseline-card">
+      <video controls loop muted playsinline preload="metadata">
+        <source src="assets/videos/cbf_baseline_d190.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <h4>CBF baseline, dual-quadruped</h4>
+        <p>Headline D=1.90&nbsp;m gap scenario under the CBF baseline. It also converges, 29% slower than the density constraint and with a substantially higher box-level solve-failure rate.</p>
+      </div>
+    </div>
     <div class="baseline-card">
       <video controls loop muted playsinline preload="metadata">
         <source src="assets/videos/baseline_rrt_case3_gap_tighter.mp4" type="video/mp4">
       </video>
       <div class="card-body">
         <h4>RRT*+tracking, dual-quadruped</h4>
-        <p>Headline D=1.90&nbsp;m gap scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled) &mdash; the exact geometry Table III's numbers are measured on.</p>
+        <p>Headline D=1.90&nbsp;m gap scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled) &mdash; the exact geometry Table IV's numbers are measured on.</p>
       </div>
     </div>
     <div class="baseline-card">
@@ -364,34 +435,40 @@
       </video>
       <div class="card-body">
         <h4>RRT*+tracking, triple-quadruped</h4>
-        <p>Headline D=2.49&nbsp;m gap scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled) &mdash; the exact geometry Table III's numbers are measured on.</p>
+        <p>Headline D=2.49&nbsp;m gap scenario under the RRT*-plus-tracking baseline (identical MPCs, density avoidance disabled) &mdash; the exact geometry Table IV's numbers are measured on.</p>
       </div>
     </div>
   </div>
 
   <div class="table-scroll">
     <table>
-      <caption>Table III &middot; ours vs. RRT*-plus-tracking baseline, on the headline gap scenarios (paper's Table&nbsp;IV).</caption>
+      <caption>Table IV &middot; ours vs. CBF and RRT*-plus-tracking baselines (paper's Table&nbsp;IV).</caption>
       <thead>
         <tr>
           <th>Scenario</th>
           <th>Method</th>
           <th>Reached goal</th>
           <th class="num">Compl. time (s)</th>
-          <th class="num">Dist. cov. (%)</th>
-          <th class="num">Zero-force steps (%)</th>
+          <th class="num">Solve time (ms)</th>
           <th>Yaw drift (deg)</th>
           <th class="num">Min box&ndash;obs. (m)</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td rowspan="2">Dual-quad.</td>
+          <td rowspan="3">Dual-quad.</td>
           <td>Ours</td>
           <td>yes</td>
-          <td class="num">37.35</td>
-          <td class="num">100</td>
-          <td class="num">&mdash;</td>
+          <td class="num">38.50</td>
+          <td class="num">1543.2 &plusmn; 909.3</td>
+          <td>&mdash;</td>
+          <td class="num">0.02</td>
+        </tr>
+        <tr>
+          <td>CBF baseline</td>
+          <td>yes</td>
+          <td class="num">49.70</td>
+          <td class="num">834.6 &plusmn; 433.7</td>
           <td>&mdash;</td>
           <td class="num">0.00</td>
         </tr>
@@ -399,8 +476,7 @@
           <td>RRT* baseline</td>
           <td>no</td>
           <td class="num">&mdash;</td>
-          <td class="num">37.8</td>
-          <td class="num">8.1</td>
+          <td class="num">1079.6 &plusmn; 635.6</td>
           <td>&minus;47.3 to 10.5</td>
           <td class="num">0.50</td>
         </tr>
@@ -409,8 +485,7 @@
           <td>Ours</td>
           <td>yes</td>
           <td class="num">28.92</td>
-          <td class="num">100</td>
-          <td class="num">&mdash;</td>
+          <td class="num">2431.1 &plusmn; 1486.5</td>
           <td>&mdash;</td>
           <td class="num">0.04</td>
         </tr>
@@ -418,8 +493,7 @@
           <td>RRT* baseline</td>
           <td>no</td>
           <td class="num">&mdash;</td>
-          <td class="num">41.4</td>
-          <td class="num">45.4</td>
+          <td class="num">881.3 &plusmn; 559.1</td>
           <td>&minus;67.6 to 0.3</td>
           <td class="num">0.51</td>
         </tr>
@@ -427,7 +501,85 @@
     </table>
   </div>
   <div class="callout">
-    <b>Note on the videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry Table III's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling.</div>
+    <b>Note on the RRT* videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry Table IV's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling. The CBF baseline reaches the goal on the one scenario it was tested on, but slower and with a less reliable per-step solve than the density constraint.</div>
+</section>
+
+<section id="gait-sync" class="wrap">
+  <span class="section-kicker">Gait Synchronization</span>
+  <h2 class="section-title">Does synchronizing the robots' gait phase matter?</h2>
+  <p class="section-lede">Gait synchronization, all robots sharing the same stance/swing timing rather than drifting independently, was raised as a way to smooth the commanded push force. Checking the implementation first, both robots' gait generators already share an identical, deterministic phase offset with no per-robot frequency adaptation enabled, so the two are phase-locked by construction, before any explicit synchronization mechanism is added. The comparison condition deliberately offsets one robot's phase by half a gait cycle.</p>
+
+  <div class="baseline-grid">
+    <div class="baseline-card">
+      <video controls loop muted playsinline preload="metadata">
+        <source src="assets/videos/gait_synced_d190.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <h4>Phase-locked (default)</h4>
+        <p>Headline D=1.90&nbsp;m dual-quadruped scenario, both robots' gait generators sharing an identical phase, the default used for every other result on this page.</p>
+      </div>
+    </div>
+    <div class="baseline-card">
+      <video controls loop muted playsinline preload="metadata">
+        <source src="assets/videos/gait_desync_d190.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <h4>Half-cycle offset</h4>
+        <p>Same scenario, one robot's gait phase deliberately offset by half a cycle, the comparison condition.</p>
+      </div>
+    </div>
+  </div>
+
+  <figure class="zoomable" data-full="assets/figures/gait_sync_diagnostic.png" style="margin-top:28px;">
+    <img src="assets/figures/gait_sync_diagnostic.png" alt="Diagnostic panels comparing phase-locked vs. half-cycle-offset gait synchronization.">
+    <figcaption><b>Fig. 3.</b> Diagnostic panels, phase-locked (red) vs. half-cycle offset (blue), same panel layout as Fig.&nbsp;2.</figcaption>
+  </figure>
+
+  <div class="table-scroll" style="margin-top:20px;">
+    <table>
+      <caption>Table V &middot; gait phase synchronization, default (locked) vs. a deliberate half-cycle offset (paper's Table&nbsp;V).</caption>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th class="num">Phase-locked (default)</th>
+          <th class="num">Half-cycle offset</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Convergence time (s)</td>
+          <td class="num">38.50</td>
+          <td class="num">37.90</td>
+        </tr>
+        <tr>
+          <td>Push-force coeff. of variation</td>
+          <td class="num">0.781</td>
+          <td class="num">0.845</td>
+        </tr>
+        <tr>
+          <td>Mean step-to-step force change (N)</td>
+          <td class="num">13.09</td>
+          <td class="num">13.89</td>
+        </tr>
+        <tr>
+          <td>|f<sub>1</sub>&minus;f<sub>2</sub>| mean&plusmn;SD (N)</td>
+          <td class="num">13.37 &plusmn; 13.16</td>
+          <td class="num">12.41 &plusmn; 13.69</td>
+        </tr>
+        <tr>
+          <td>Agent separation mean&plusmn;SD (m)</td>
+          <td class="num">0.708 &plusmn; 0.041</td>
+          <td class="num">0.696 &plusmn; 0.045</td>
+        </tr>
+        <tr>
+          <td>Effort/step (N&sup2;m&sup2;)</td>
+          <td class="num">887.7 &plusmn; 145.9</td>
+          <td class="num">893.6 &plusmn; 141.0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">Convergence time was not meaningfully affected either way. Force-differential magnitude, agent separation, and control effort were also comparable between the two; the effect is specifically on the combined push force's temporal smoothness (coefficient of variation and step-to-step change), both modestly worse once desynced, a small but directionally consistent effect, not a large one.</p>
 </section>
 
 
