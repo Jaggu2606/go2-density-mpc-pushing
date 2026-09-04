@@ -408,7 +408,7 @@
 <section id="baseline" class="wrap">
   <span class="section-kicker">Baseline Comparison</span>
   <h2 class="section-title">vs. a CBF baseline and a classical RRT*-plus-tracking baseline</h2>
-  <p class="section-lede">Two baselines are run through the identical pipeline. A Control Barrier Function (CBF) baseline swaps the box-level MPC's density constraint for one discrete-time CBF constraint per obstacle (same dynamics, cost, and fixed contact offsets), tested on the dual-quadruped scenario. An RRT* path is planned once per scenario, inflated by the box's footprint and obstacle radius plus a safety pad, then converted to a pure-pursuit reference fed to the <i>same</i> box- and robot-level MPCs with density avoidance disabled &mdash; obstacle avoidance delegated entirely to the planned path, as in a conventional plan-then-track pipeline.</p>
+  <p class="section-lede">Two baselines are run through the identical pipeline. A Control Barrier Function (CBF) baseline swaps the box-level MPC's density constraint for one discrete-time CBF constraint per obstacle (same dynamics, cost, and fixed contact offsets), tested on both scenarios. An RRT* path is planned once per scenario, inflated by the box's footprint and obstacle radius plus a safety pad, then converted to a pure-pursuit reference fed to the <i>same</i> box- and robot-level MPCs with density avoidance disabled &mdash; obstacle avoidance delegated entirely to the planned path, as in a conventional plan-then-track pipeline.</p>
 
   <div class="baseline-grid">
     <div class="baseline-card">
@@ -418,6 +418,15 @@
       <div class="card-body">
         <h4>CBF baseline, dual-quadruped</h4>
         <p>Headline D=1.90&nbsp;m gap scenario under the CBF baseline. It also converges, 29% slower than the density constraint and with a substantially higher box-level solve-failure rate.</p>
+      </div>
+    </div>
+    <div class="baseline-card">
+      <video controls loop muted playsinline preload="metadata">
+        <source src="assets/videos/cbf_baseline_triple.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <h4>CBF baseline, triple-quadruped</h4>
+        <p>Headline D=2.49&nbsp;m gap scenario under the CBF baseline. It also converges, 7% slower than the density constraint and with a higher box-level solve-failure rate (49.3% vs. 40.4%).</p>
       </div>
     </div>
     <div class="baseline-card">
@@ -481,11 +490,19 @@
           <td class="num">0.50</td>
         </tr>
         <tr>
-          <td rowspan="2">Triple-quad.</td>
+          <td rowspan="3">Triple-quad.</td>
           <td>Ours</td>
           <td>yes</td>
           <td class="num">28.92</td>
           <td class="num">2431.1 &plusmn; 1486.5</td>
+          <td>&mdash;</td>
+          <td class="num">0.04</td>
+        </tr>
+        <tr>
+          <td>CBF baseline</td>
+          <td>yes</td>
+          <td class="num">30.85</td>
+          <td class="num">661.2 &plusmn; 404.3</td>
           <td>&mdash;</td>
           <td class="num">0.04</td>
         </tr>
@@ -501,7 +518,7 @@
     </table>
   </div>
   <div class="callout">
-    <b>Note on the RRT* videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry Table IV's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling. The CBF baseline reaches the goal on the one scenario it was tested on, but slower and with a less reliable per-step solve than the density constraint.</div>
+    <b>Note on the RRT* videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry Table IV's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling. The CBF baseline reaches the goal at both gap widths, but slower (7&ndash;29%) and with a less reliable per-step solve than the density constraint.</div>
 </section>
 
 <section id="gait-sync" class="wrap">
