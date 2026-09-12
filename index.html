@@ -256,7 +256,7 @@
         </tr>
         <tr>
           <td>enabled (Ours)</td>
-          <td class="num">38.6 &plusmn; 0.8</td>
+          <td class="num">38.50</td>
           <td class="num">353.0 &plusmn; 18.8</td>
           <td class="num">0.708 &plusmn; 0.041</td>
         </tr>
@@ -269,14 +269,14 @@
         </tr>
         <tr>
           <td>enabled (Ours)</td>
-          <td class="num">28.5 &plusmn; 1.0</td>
+          <td class="num">28.92</td>
           <td class="num">351.0 &plusmn; 26.1</td>
           <td class="num">0.603 &plusmn; 0.007</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="table-note">The enabled rows also show completion time moving oppositely with team size (38.6&plusmn;0.8s at N=2 against 28.5&plusmn;1.0s at N=3), not an isolated team-size effect. The D=1.90m and D=2.49m "enabled (Ours)" completion times and solve times match the Main Results and Controller-performance tables above (same headline runs); D=2.20m's rows and both "disabled" rows are shown at their original, pre-optimization solve times, since that specific configuration hasn't been re-run since.</p>
+  <p class="table-note">The enabled rows also show completion time moving oppositely with team size (38.50s at N=2 against 28.92s at N=3), not an isolated team-size effect. The D=1.90m and D=2.49m "enabled (Ours)" solve times match the Controller-performance table above (same headline runs); their completion times are that same run's single deterministic-run figure, shown here on equal footing with the "disabled" column rather than as the N=10 trial mean (Main Results/Baseline Comparison report the N=10 mean&plusmn;SD for these same runs, 38.6&plusmn;0.8s and 28.5&plusmn;1.0s respectively). D=2.20m's rows and both "disabled" rows are shown at their original, pre-optimization solve times, since that specific configuration hasn't been re-run since.</p>
 </section>
 
 <section id="gallery" class="wrap">
@@ -540,7 +540,7 @@
       <tbody>
         <tr>
           <td>Convergence time (s)</td>
-          <td class="num">38.6 &plusmn; 0.8</td>
+          <td class="num">38.50</td>
           <td class="num">37.90</td>
         </tr>
         <tr>
@@ -571,7 +571,7 @@
       </tbody>
     </table>
   </div>
-  <p class="table-note">Convergence time was not meaningfully affected either way. Force-differential magnitude, agent separation, and control effort were also comparable between the two; the effect is specifically on the combined push force's temporal smoothness (coefficient of variation and step-to-step change), both modestly worse once desynced, a small but directionally consistent effect, not a large one. The "Phase-locked (default)" column is the same dual-quadruped headline run reported in the Controller-performance table above (its agent-separation and effort/step values, 0.708&plusmn;0.041&nbsp;m and 887.7&plusmn;145.9&nbsp;N&sup2;m&sup2;, are identical here), shown again in full so both gait-sync conditions can be compared side by side in one table. Its convergence time (38.6&plusmn;0.8&nbsp;s) is likewise the N=10 trial mean, matching the Main Results/Baseline Comparison tables; the half-cycle-offset column's 37.90&nbsp;s remains a single deterministic run, since that condition wasn't included in the N=10 perturbation campaign.</p>
+  <p class="table-note">Convergence time was not meaningfully affected either way. Force-differential magnitude, agent separation, and control effort were also comparable between the two; the effect is specifically on the combined push force's temporal smoothness (coefficient of variation and step-to-step change), both modestly worse once desynced, a small but directionally consistent effect, not a large one. The "Phase-locked (default)" column is the same dual-quadruped headline run reported in the Controller-performance table above (its agent-separation and effort/step values, 0.708&plusmn;0.041&nbsp;m and 887.7&plusmn;145.9&nbsp;N&sup2;m&sup2;, are identical here), shown again in full so both gait-sync conditions can be compared side by side in one table. Its convergence time (38.50&nbsp;s) is that same single deterministic run's value, shown here on equal footing with the half-cycle-offset column's 37.90&nbsp;s (also a single deterministic run, since that condition wasn't included in the N=10 perturbation campaign) rather than as the N=10 trial mean; Main Results/Baseline Comparison report this run's N=10 mean&plusmn;SD instead, 38.6&plusmn;0.8&nbsp;s.</p>
 </section>
 
 
