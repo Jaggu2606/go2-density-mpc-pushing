@@ -220,10 +220,10 @@
   </figure>
 
   <h3 style="margin-top:32px;">Robot-level density constraint ablation</h3>
-  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> row is shown there (38.6&plusmn;0.8s/353.0&plusmn;18.8&nbsp;ms/0.708&plusmn;0.041&nbsp;m dual; 28.5&plusmn;1.0s/351.0&plusmn;26.1&nbsp;ms/0.603&plusmn;0.007&nbsp;m triple), so only the <i>disabled</i> row is repeated here for direct comparison. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
+  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> values (38.6&plusmn;0.8s/353.0&plusmn;18.8&nbsp;ms/0.708&plusmn;0.041&nbsp;m dual; 28.5&plusmn;1.0s/351.0&plusmn;26.1&nbsp;ms/0.603&plusmn;0.007&nbsp;m triple) are reported there in full &mdash; the table below points back to them instead of repeating the numbers a third time. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
   <div class="table-scroll">
     <table>
-      <caption>Robot-level density constraint, enabled vs. disabled cost comparison (supplementary data, beyond what's in the paper; headline scenarios' already-published enabled row omitted here, see lede).</caption>
+      <caption>Robot-level density constraint, enabled vs. disabled cost comparison (supplementary data, beyond what's in the paper; headline scenarios' enabled values are already published above, referenced here rather than repeated).</caption>
       <thead>
         <tr>
           <th>Scenario</th>
@@ -248,23 +248,31 @@
           <td class="num">0.723 &plusmn; 0.018</td>
         </tr>
         <tr>
-          <td>Dual, D=1.90m (headline scenario)</td>
+          <td rowspan="2">Dual, D=1.90m (headline scenario)</td>
           <td>disabled</td>
           <td class="num">37.35</td>
           <td class="num">1546.6 &plusmn; 1013.3</td>
           <td class="num">0.730 &plusmn; 0.012</td>
         </tr>
         <tr>
-          <td>Triple, D=2.49m (headline scenario)</td>
+          <td>enabled (Ours)</td>
+          <td class="num" colspan="3">see Main Results / Controller-performance tables above (38.6&plusmn;0.8s / 353.0&plusmn;18.8&nbsp;ms / 0.708&plusmn;0.041&nbsp;m)</td>
+        </tr>
+        <tr>
+          <td rowspan="2">Triple, D=2.49m (headline scenario)</td>
           <td>disabled</td>
           <td class="num">28.16</td>
           <td class="num">2548.5 &plusmn; 1887.2</td>
           <td class="num">0.605 &plusmn; 0.003</td>
         </tr>
+        <tr>
+          <td>enabled (Ours)</td>
+          <td class="num" colspan="3">see Main Results / Controller-performance tables above (28.5&plusmn;1.0s / 351.0&plusmn;26.1&nbsp;ms / 0.603&plusmn;0.007&nbsp;m)</td>
+        </tr>
       </tbody>
     </table>
   </div>
-  <p class="table-note">Comparing this table's disabled rows against the published enabled values (see lede) shows completion time moving oppositely with team size once the constraint is enabled (38.6&plusmn;0.8s at N=2 against 28.5&plusmn;1.0s at N=3), not an isolated team-size effect. All four rows shown in this table (D=2.20m's pair, and the two headline scenarios' disabled rows) are at their original, pre-optimization solve times; only the two published headline enabled values referenced in the lede reflect the later solver reuse and state warm-starting.</p>
+  <p class="table-note">Comparing this table's disabled rows against the linked-to enabled values shows completion time moving oppositely with team size once the constraint is enabled (38.6&plusmn;0.8s at N=2 against 28.5&plusmn;1.0s at N=3), not an isolated team-size effect. The four rows with numbers in this table (D=2.20m's disabled/enabled pair, and the two headline scenarios' disabled rows) are all at their original, pre-optimization solve times; only the two published headline enabled values these link back to (Main Results / Controller-performance tables) reflect the later solver reuse and state warm-starting.</p>
 </section>
 
 <section id="gallery" class="wrap">
