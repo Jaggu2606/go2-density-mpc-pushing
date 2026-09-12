@@ -223,7 +223,7 @@
   </figure>
 
   <h3 style="margin-top:32px;">Robot-level density constraint ablation</h3>
-  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time, solve-failure rate, and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> row is shown there (38.50s/353.0&plusmn;18.8&nbsp;ms/35.4%/0.708&plusmn;0.041&nbsp;m dual; 28.92s/351.0&plusmn;26.1&nbsp;ms/40.4%/0.603&plusmn;0.007&nbsp;m triple), so only the <i>disabled</i> row is repeated here for direct comparison. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
+  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time, solve-failure rate, and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> row is shown there (38.6&plusmn;0.8s/353.0&plusmn;18.8&nbsp;ms/35.4%/0.708&plusmn;0.041&nbsp;m dual; 28.5&plusmn;1.0s/351.0&plusmn;26.1&nbsp;ms/40.4%/0.603&plusmn;0.007&nbsp;m triple), so only the <i>disabled</i> row is repeated here for direct comparison. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
   <div class="table-scroll">
     <table>
       <caption>Robot-level density constraint, enabled vs. disabled cost comparison (supplementary data, beyond what's in the paper; headline scenarios' already-published enabled row omitted here, see lede).</caption>
@@ -272,7 +272,7 @@
       </tbody>
     </table>
   </div>
-  <p class="table-note">Comparing this table's disabled rows against the published enabled values (see lede) shows completion time and solve-failed rate moving oppositely with team size once the constraint is enabled (38.50s / 35.4% at N=2 against 28.92s / 40.4% at N=3), not an isolated team-size effect. All four rows shown in this table (D=2.20m's pair, and the two headline scenarios' disabled rows) are at their original, pre-optimization solve times; only the two published headline enabled values referenced in the lede reflect the later solver reuse and state warm-starting.</p>
+  <p class="table-note">Comparing this table's disabled rows against the published enabled values (see lede) shows completion time and solve-failed rate moving oppositely with team size once the constraint is enabled (38.6&plusmn;0.8s / 35.4% at N=2 against 28.5&plusmn;1.0s / 40.4% at N=3), not an isolated team-size effect. All four rows shown in this table (D=2.20m's pair, and the two headline scenarios' disabled rows) are at their original, pre-optimization solve times; only the two published headline enabled values referenced in the lede reflect the later solver reuse and state warm-starting.</p>
 </section>
 
 <section id="gallery" class="wrap">
