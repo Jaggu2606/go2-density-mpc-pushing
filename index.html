@@ -145,13 +145,12 @@
   <h3 style="margin-top:8px;">Main results table</h3>
   <div class="table-scroll">
     <table>
-      <caption>Hardest evaluated scenarios, closed-boundary scene (supplementary data from the same logged runs as the paper). t<sub>conv</sub> is the N=10 trial mean&plusmn;SD (matching the Baseline Comparison table); failed solves, &rho;<sub>b,peak</sub>, and clearance are each from that scenario's own single deterministic run.</caption>
+      <caption>Hardest evaluated scenarios, closed-boundary scene (supplementary data from the same logged runs as the paper). t<sub>conv</sub> is the N=10 trial mean&plusmn;SD (matching the Baseline Comparison table); &rho;<sub>b,peak</sub> and clearance are each from that scenario's own single deterministic run.</caption>
       <thead>
         <tr>
           <th>Scenario (N)</th>
           <th class="num">D (m)</th>
           <th class="num">t<sub>conv</sub> (s), N=10 mean</th>
-          <th class="num">Failed solves (%)</th>
           <th class="num">&rho;<sub>b,peak</sub></th>
           <th class="num">Clearance (m)</th>
         </tr>
@@ -161,7 +160,6 @@
           <td>Dual-quadruped (2)</td>
           <td class="num">1.90</td>
           <td class="num">38.6 &plusmn; 0.8</td>
-          <td class="num">35.4</td>
           <td class="num">20.0</td>
           <td class="num">0.02</td>
         </tr>
@@ -169,14 +167,13 @@
           <td>Triple-quadruped (3)</td>
           <td class="num">2.49</td>
           <td class="num">28.5 &plusmn; 1.0</td>
-          <td class="num">40.4</td>
           <td class="num">20.0</td>
           <td class="num">0.04</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="table-note">"Failed solves" is the fraction of box-level MPC solves that fell back to the last accepted command (not an emergency stop) rather than converging. Clearance is the worst-case distance from the box's true rotated footprint to each obstacle's physical radius over the whole run, not a center-distance proxy.</p>
+  <p class="table-note">Clearance is the worst-case distance from the box's true rotated footprint to each obstacle's physical radius over the whole run, not a center-distance proxy.</p>
 
   <h3 style="margin-top:32px;">Controller-performance ablation</h3>
   <div class="table-scroll">
@@ -223,7 +220,7 @@
   </figure>
 
   <h3 style="margin-top:32px;">Robot-level density constraint ablation</h3>
-  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time, solve-failure rate, and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> row is shown there (38.6&plusmn;0.8s/353.0&plusmn;18.8&nbsp;ms/35.4%/0.708&plusmn;0.041&nbsp;m dual; 28.5&plusmn;1.0s/351.0&plusmn;26.1&nbsp;ms/40.4%/0.603&plusmn;0.007&nbsp;m triple), so only the <i>disabled</i> row is repeated here for direct comparison. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
+  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> row is shown there (38.6&plusmn;0.8s/353.0&plusmn;18.8&nbsp;ms/0.708&plusmn;0.041&nbsp;m dual; 28.5&plusmn;1.0s/351.0&plusmn;26.1&nbsp;ms/0.603&plusmn;0.007&nbsp;m triple), so only the <i>disabled</i> row is repeated here for direct comparison. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
   <div class="table-scroll">
     <table>
       <caption>Robot-level density constraint, enabled vs. disabled cost comparison (supplementary data, beyond what's in the paper; headline scenarios' already-published enabled row omitted here, see lede).</caption>
@@ -233,7 +230,6 @@
           <th>Constraint</th>
           <th class="num">Compl. (s)</th>
           <th class="num">Solve (ms)</th>
-          <th class="num">Solve-failed (%)</th>
           <th class="num">Sep. (m)</th>
         </tr>
       </thead>
@@ -243,14 +239,12 @@
           <td>disabled</td>
           <td class="num">31.93</td>
           <td class="num">917.7 &plusmn; 548.1</td>
-          <td class="num">29.6</td>
           <td class="num">0.729 &plusmn; 0.009</td>
         </tr>
         <tr>
           <td>enabled (Ours)</td>
           <td class="num">31.44</td>
           <td class="num">1270.4 &plusmn; 755.9</td>
-          <td class="num">29.4</td>
           <td class="num">0.723 &plusmn; 0.018</td>
         </tr>
         <tr>
@@ -258,7 +252,6 @@
           <td>disabled</td>
           <td class="num">37.35</td>
           <td class="num">1546.6 &plusmn; 1013.3</td>
-          <td class="num">37.3</td>
           <td class="num">0.730 &plusmn; 0.012</td>
         </tr>
         <tr>
@@ -266,13 +259,12 @@
           <td>disabled</td>
           <td class="num">28.16</td>
           <td class="num">2548.5 &plusmn; 1887.2</td>
-          <td class="num">38.1</td>
           <td class="num">0.605 &plusmn; 0.003</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="table-note">Comparing this table's disabled rows against the published enabled values (see lede) shows completion time and solve-failed rate moving oppositely with team size once the constraint is enabled (38.6&plusmn;0.8s / 35.4% at N=2 against 28.5&plusmn;1.0s / 40.4% at N=3), not an isolated team-size effect. All four rows shown in this table (D=2.20m's pair, and the two headline scenarios' disabled rows) are at their original, pre-optimization solve times; only the two published headline enabled values referenced in the lede reflect the later solver reuse and state warm-starting.</p>
+  <p class="table-note">Comparing this table's disabled rows against the published enabled values (see lede) shows completion time moving oppositely with team size once the constraint is enabled (38.6&plusmn;0.8s at N=2 against 28.5&plusmn;1.0s at N=3), not an isolated team-size effect. All four rows shown in this table (D=2.20m's pair, and the two headline scenarios' disabled rows) are at their original, pre-optimization solve times; only the two published headline enabled values referenced in the lede reflect the later solver reuse and state warm-starting.</p>
 </section>
 
 <section id="gallery" class="wrap">
@@ -407,7 +399,7 @@
       </video>
       <div class="card-body">
         <h4>CBF MPC, dual-quadruped</h4>
-        <p>Headline D=1.90&nbsp;m gap scenario under CBF MPC. This single run converges, with density MPC completing this scenario 22.5% faster and with a substantially lower box-level solve-failure rate (35.4% vs. 61.4%) &mdash; but over 10 trials with a small start-pose perturbation, CBF MPC only reaches the goal 5/10 times here, against 10/10 for density MPC.</p>
+        <p>Headline D=1.90&nbsp;m gap scenario under CBF MPC. This single run converges, with density MPC completing this scenario 22.5% faster &mdash; but over 10 trials with a small start-pose perturbation, CBF MPC only reaches the goal 5/10 times here, against 10/10 for density MPC.</p>
       </div>
     </div>
     <div class="baseline-card">
@@ -416,7 +408,7 @@
       </video>
       <div class="card-body">
         <h4>CBF MPC, triple-quadruped</h4>
-        <p>Headline D=2.49&nbsp;m gap scenario under CBF MPC. It also converges, with density MPC completing this scenario 6.3% faster and with a lower box-level solve-failure rate (40.4% vs. 49.3%) &mdash; and remains fully robust, 10/10, over the same 10-trial perturbation check.</p>
+        <p>Headline D=2.49&nbsp;m gap scenario under CBF MPC. It also converges, with density MPC completing this scenario 6.3% faster &mdash; and remains fully robust, 10/10, over the same 10-trial perturbation check.</p>
       </div>
     </div>
     <div class="baseline-card">
@@ -492,7 +484,7 @@
       </tbody>
     </table>
   </div>
-  <p class="table-note">Success and completion time (mean&plusmn;SD) are over N=10 trials/method with the robots' start pose independently perturbed each trial; box-level solve time, box-level solve-failure rate, and RRT* yaw drift are each from that method's own single deterministic run. With solver reuse and state warm-starting, density MPC's own box-level solve time is 353.0&plusmn;18.8&nbsp;ms (dual-quad) and 351.0&plusmn;26.1&nbsp;ms (triple-quad); CBF MPC's box-level solve, measured separately, was 834.6&plusmn;433.7&nbsp;ms (dual-quad) and 661.2&plusmn;404.3&nbsp;ms (triple-quad). The RRT* baseline's heading drifts by tens of degrees before stalling (&minus;47.3&deg; to 10.5&deg; dual-quad, &minus;67.6&deg; to 0.3&deg; triple-quad). CBF MPC citation: Zeng, Zhang &amp; Sreenath, "Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Function," ACC 2021. RRT* citation: Karaman &amp; Frazzoli, "Sampling-based Algorithms for Optimal Motion Planning," IJRR 2011.</p>
+  <p class="table-note">Success and completion time (mean&plusmn;SD) are over N=10 trials/method with the robots' start pose independently perturbed each trial; box-level solve time and RRT* yaw drift are each from that method's own single deterministic run. With solver reuse and state warm-starting, density MPC's own box-level solve time is 353.0&plusmn;18.8&nbsp;ms (dual-quad) and 351.0&plusmn;26.1&nbsp;ms (triple-quad); CBF MPC's box-level solve, measured separately, was 834.6&plusmn;433.7&nbsp;ms (dual-quad) and 661.2&plusmn;404.3&nbsp;ms (triple-quad). The RRT* baseline's heading drifts by tens of degrees before stalling (&minus;47.3&deg; to 10.5&deg; dual-quad, &minus;67.6&deg; to 0.3&deg; triple-quad). CBF MPC citation: Zeng, Zhang &amp; Sreenath, "Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Function," ACC 2021. RRT* citation: Karaman &amp; Frazzoli, "Sampling-based Algorithms for Optimal Motion Planning," IJRR 2011.</p>
   <div class="callout">
     <b>Note on the RRT* videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry the table's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling, and the RRT* baseline fails to reach the goal in every one of the 10 perturbed trials at both team sizes. CBF MPC reaches the goal in this scenario's single run at both gap widths, with density MPC reducing completion time by 22.5% and 6.3% in the two scenarios and solving more reliably per step &mdash; and, on the tighter dual-quadruped gap specifically, only 5 of 10 perturbed trials actually reach the goal, a robustness gap the single run does not show.</div>
 </section>
