@@ -213,6 +213,11 @@
   </div>
   <p class="table-note">Solve time and effort/step are mean&plusmn;SD over genuine box-level MPC solve events (solve time additionally Tukey-fence cleaned). Peak density &rho;<sub>b,peak</sub>&nbsp;=&nbsp;20.0 in both scenarios (reported as a point value, not mean&plusmn;SD, since it is a worst-case bound rather than a typical-case cost). Solve times of order 1&nbsp;s against a 50&nbsp;ms real-time budget are the paper's noted solver-cost limitation.</p>
 
+  <figure class="zoomable" data-full="assets/figures/results_single_column.png" style="margin-top:28px;">
+    <img src="assets/figures/results_single_column.png" alt="Object and robot trajectories, object density, and minimum robot-obstacle distances for both scenarios.">
+    <figcaption><b>Fig. 1.</b> (a,b) Object and robot trajectories, (c,e) object density, and (d,f) minimum robot&ndash;obstacle distances, for the dual- and triple-quadruped scenarios (from the paper's compact v3 draft).</figcaption>
+  </figure>
+
   <figure class="zoomable" data-full="assets/figures/merged_diagnostic_wide.png" style="margin-top:28px;">
     <img src="assets/figures/merged_diagnostic_wide.png" alt="Diagnostic panels for both scenarios overlaid: box velocity, robot tracking error, density trace, contact force, yaw, and clearance.">
     <figcaption><b>Fig. 2.</b> Diagnostic panels, both scenarios overlaid (dual-quadruped red, triple-quadruped blue), both with the robot-level density constraint enabled: (a) box velocity vs. prediction, (b) robot velocity (mean/robot) vs. reference, (c) box position error vs. prediction, (d) robot position error (mean/robot), (e) box density &rho;<sub>b</sub>(t), (f) contact force (mean/robot), commanded vs. realized, (g) box yaw vs. goal heading, (h) box&ndash;obstacle clearance.</figcaption>
