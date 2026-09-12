@@ -223,10 +223,10 @@
   </figure>
 
   <h3 style="margin-top:32px;">Robot-level density constraint ablation</h3>
-  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled (used for every other result on this page); an extra active safety constraint is not free, so solve time, solve-failure rate, and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results table above and the Baseline Comparison further down this page; "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page.</p>
+  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time, solve-failure rate, and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> row is shown there (38.50s/353.0&plusmn;18.8&nbsp;ms/35.4%/0.708&plusmn;0.041&nbsp;m dual; 28.92s/351.0&plusmn;26.1&nbsp;ms/40.4%/0.603&plusmn;0.007&nbsp;m triple), so only the <i>disabled</i> row is repeated here for direct comparison. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
   <div class="table-scroll">
     <table>
-      <caption>Robot-level density constraint, enabled vs. disabled, full cost comparison (supplementary data, beyond what's in the paper).</caption>
+      <caption>Robot-level density constraint, enabled vs. disabled cost comparison (supplementary data, beyond what's in the paper; headline scenarios' already-published enabled row omitted here, see lede).</caption>
       <thead>
         <tr>
           <th>Scenario</th>
@@ -254,7 +254,7 @@
           <td class="num">0.723 &plusmn; 0.018</td>
         </tr>
         <tr>
-          <td rowspan="2">Dual, D=1.90m (headline scenario)</td>
+          <td>Dual, D=1.90m (headline scenario)</td>
           <td>disabled</td>
           <td class="num">37.35</td>
           <td class="num">1546.6 &plusmn; 1013.3</td>
@@ -262,31 +262,17 @@
           <td class="num">0.730 &plusmn; 0.012</td>
         </tr>
         <tr>
-          <td>enabled (Ours)</td>
-          <td class="num">38.50</td>
-          <td class="num">353.0 &plusmn; 18.8</td>
-          <td class="num">35.4</td>
-          <td class="num">0.708 &plusmn; 0.041</td>
-        </tr>
-        <tr>
-          <td rowspan="2">Triple, D=2.49m (headline scenario)</td>
+          <td>Triple, D=2.49m (headline scenario)</td>
           <td>disabled</td>
           <td class="num">28.16</td>
           <td class="num">2548.5 &plusmn; 1887.2</td>
           <td class="num">38.1</td>
           <td class="num">0.605 &plusmn; 0.003</td>
         </tr>
-        <tr>
-          <td>enabled (Ours)</td>
-          <td class="num">28.92</td>
-          <td class="num">351.0 &plusmn; 26.1</td>
-          <td class="num">40.4</td>
-          <td class="num">0.603 &plusmn; 0.007</td>
-        </tr>
       </tbody>
     </table>
   </div>
-  <p class="table-note">The enabled rows also show completion time and solve-failed rate moving oppositely with team size (38.50s / 35.4% at N=2 against 28.92s / 40.4% at N=3), not an isolated team-size effect. The D=1.90m and D=2.49m "enabled (Ours)" solve times reflect solver reuse and state warm-starting added since the other four rows (D=2.20m, and both "disabled" rows) were logged &mdash; those four are shown at their original, pre-optimization solve times, since that specific configuration hasn't been re-run since.</p>
+  <p class="table-note">Comparing this table's disabled rows against the published enabled values (see lede) shows completion time and solve-failed rate moving oppositely with team size once the constraint is enabled (38.50s / 35.4% at N=2 against 28.92s / 40.4% at N=3), not an isolated team-size effect. All four rows shown in this table (D=2.20m's pair, and the two headline scenarios' disabled rows) are at their original, pre-optimization solve times; only the two published headline enabled values referenced in the lede reflect the later solver reuse and state warm-starting.</p>
 </section>
 
 <section id="gallery" class="wrap">
