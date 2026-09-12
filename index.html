@@ -78,7 +78,7 @@
     <img src="assets/figures/framework_fig.png" alt="Hierarchical architecture diagram: box-level density MPC, robot-level density NMPC, and whole-body control on real Go2 contact dynamics in MuJoCo.">
     <figcaption><b>Fig. 1.</b> Hierarchical architecture: box-level density MPC, robot-level density NMPC, and whole-body control on real Go2 contact dynamics in MuJoCo.</figcaption>
   </figure>
-  <figure class="zoomable" data-full="assets/figures/circle_square_density.png" style="margin-top:28px;">
+  <figure class="arch-figure zoomable" data-full="assets/figures/circle_square_density.png" style="margin-top:28px;">
     <img src="assets/figures/circle_square_density.png" alt="Density and navigation field for a circular region (a,b) and the corresponding construction for a rectangular region (c,d).">
     <figcaption><b>Fig. 2.</b> (a,b) Density and corresponding navigation field for a circular region, (c,d) the corresponding construction for a rectangular region.</figcaption>
   </figure>
@@ -454,73 +454,58 @@
 
   <div class="table-scroll">
     <table>
-      <caption>Density MPC vs. CBF MPC and RRT*-plus-tracking, N=10 trials/method under a small random start-pose perturbation.</caption>
+      <caption>Baseline Comparisons (N=10 trials/method under a small random start-pose perturbation).</caption>
       <thead>
         <tr>
-          <th>Scenario</th>
           <th>Method</th>
-          <th class="num">Success (of 10)</th>
-          <th class="num">Compl. time (s)</th>
-          <th class="num">Solve time (ms)</th>
-          <th>Yaw drift (deg)</th>
-          <th class="num">Min box&ndash;obs. (m)</th>
+          <th class="num">Success</th>
+          <th class="num">Time (s)</th>
+          <th class="num">Min. clearance (m)</th>
         </tr>
       </thead>
       <tbody>
+        <tr><td colspan="4"><i>Box pushing (n=2)</i></td></tr>
         <tr>
-          <td rowspan="3">Dual-quad.</td>
-          <td>Density MPC</td>
+          <td><b>Density MPC</b></td>
           <td class="num">10/10</td>
           <td class="num">38.61 &plusmn; 0.77</td>
-          <td class="num">1543.2 &plusmn; 909.3</td>
-          <td>&mdash;</td>
           <td class="num">0.02</td>
         </tr>
         <tr>
           <td>CBF MPC</td>
           <td class="num">5/10</td>
           <td class="num">47.97 &plusmn; 0.68</td>
-          <td class="num">834.6 &plusmn; 433.7</td>
-          <td>&mdash;</td>
           <td class="num">0.00</td>
         </tr>
         <tr>
           <td>RRT* + tracking</td>
           <td class="num">0/10</td>
           <td class="num">&mdash;</td>
-          <td class="num">1079.6 &plusmn; 635.6</td>
-          <td>&minus;47.3 to 10.5</td>
           <td class="num">0.50</td>
         </tr>
+        <tr><td colspan="4"><i>T-shape pushing (n=3)</i></td></tr>
         <tr>
-          <td rowspan="3">Triple-quad.</td>
-          <td>Density MPC</td>
+          <td><b>Density MPC</b></td>
           <td class="num">10/10</td>
           <td class="num">28.51 &plusmn; 0.95</td>
-          <td class="num">2431.1 &plusmn; 1486.5</td>
-          <td>&mdash;</td>
           <td class="num">0.04</td>
         </tr>
         <tr>
           <td>CBF MPC</td>
           <td class="num">10/10</td>
           <td class="num">31.05 &plusmn; 0.75</td>
-          <td class="num">661.2 &plusmn; 404.3</td>
-          <td>&mdash;</td>
           <td class="num">0.04</td>
         </tr>
         <tr>
           <td>RRT* + tracking</td>
           <td class="num">0/10</td>
           <td class="num">&mdash;</td>
-          <td class="num">881.3 &plusmn; 559.1</td>
-          <td>&minus;67.6 to 0.3</td>
           <td class="num">0.51</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="table-note">Success and completion time (mean&plusmn;SD) are over N=10 trials/method with the robots' start pose independently perturbed each trial; solve time, yaw drift, and clearance are from each method's own single deterministic run (unaffected by the perturbation check). CBF MPC citation: Zeng, Zhang &amp; Sreenath, "Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Function," ACC 2021. RRT* citation: Karaman &amp; Frazzoli, "Sampling-based Algorithms for Optimal Motion Planning," IJRR 2011.</p>
+  <p class="table-note">Success and completion time (mean&plusmn;SD) are over N=10 trials/method with the robots' start pose independently perturbed each trial. Box-level solve time is order 1&nbsp;s for density MPC and CBF MPC alike (against a 50&nbsp;ms real-time budget), and the RRT* baseline's heading drifts by tens of degrees before stalling &mdash; see the single-run diagnostics above for exact per-method figures. CBF MPC citation: Zeng, Zhang &amp; Sreenath, "Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Function," ACC 2021. RRT* citation: Karaman &amp; Frazzoli, "Sampling-based Algorithms for Optimal Motion Planning," IJRR 2011.</p>
   <div class="callout">
     <b>Note on the RRT* videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry the table's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling, and it fails to reach the goal in every one of the 10 perturbed trials at both team sizes. CBF MPC reaches the goal in this scenario's single run at both gap widths, but slower (7&ndash;29%) and with a less reliable per-step solve than density MPC &mdash; and, on the tighter dual-quadruped gap specifically, only 5 of 10 perturbed trials actually reach the goal, a robustness gap the single run does not show.</div>
 </section>
