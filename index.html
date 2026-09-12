@@ -420,7 +420,7 @@
       </video>
       <div class="card-body">
         <h4>CBF MPC, dual-quadruped</h4>
-        <p>Headline D=1.90&nbsp;m gap scenario under CBF MPC. This single run converges, 29% slower than density MPC and with a substantially higher box-level solve-failure rate &mdash; but over 10 trials with a small start-pose perturbation, CBF MPC only reaches the goal 5/10 times here, against 10/10 for density MPC.</p>
+        <p>Headline D=1.90&nbsp;m gap scenario under CBF MPC. This single run converges, with density MPC completing this scenario 22.5% faster and with a substantially lower box-level solve-failure rate &mdash; but over 10 trials with a small start-pose perturbation, CBF MPC only reaches the goal 5/10 times here, against 10/10 for density MPC.</p>
       </div>
     </div>
     <div class="baseline-card">
@@ -429,7 +429,7 @@
       </video>
       <div class="card-body">
         <h4>CBF MPC, triple-quadruped</h4>
-        <p>Headline D=2.49&nbsp;m gap scenario under CBF MPC. It also converges, 7% slower than density MPC and with a higher box-level solve-failure rate (49.3% vs. 40.4%) &mdash; and remains fully robust, 10/10, over the same 10-trial perturbation check.</p>
+        <p>Headline D=2.49&nbsp;m gap scenario under CBF MPC. It also converges, with density MPC completing this scenario 6.3% faster and with a lower box-level solve-failure rate (40.4% vs. 49.3%) &mdash; and remains fully robust, 10/10, over the same 10-trial perturbation check.</p>
       </div>
     </div>
     <div class="baseline-card">
@@ -507,7 +507,7 @@
   </div>
   <p class="table-note">Success and completion time (mean&plusmn;SD) are over N=10 trials/method with the robots' start pose independently perturbed each trial. Box-level solve time is order 1&nbsp;s for density MPC and CBF MPC alike (against a 50&nbsp;ms real-time budget), and the RRT* baseline's heading drifts by tens of degrees before stalling &mdash; see the single-run diagnostics above for exact per-method figures. CBF MPC citation: Zeng, Zhang &amp; Sreenath, "Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Function," ACC 2021. RRT* citation: Karaman &amp; Frazzoli, "Sampling-based Algorithms for Optimal Motion Planning," IJRR 2011.</p>
   <div class="callout">
-    <b>Note on the RRT* videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry the table's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling, and it fails to reach the goal in every one of the 10 perturbed trials at both team sizes. CBF MPC reaches the goal in this scenario's single run at both gap widths, but slower (7&ndash;29%) and with a less reliable per-step solve than density MPC &mdash; and, on the tighter dual-quadruped gap specifically, only 5 of 10 perturbed trials actually reach the goal, a robustness gap the single run does not show.</div>
+    <b>Note on the RRT* videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry the table's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling, and it fails to reach the goal in every one of the 10 perturbed trials at both team sizes. CBF MPC reaches the goal in this scenario's single run at both gap widths, with density MPC reducing completion time by 22.5% and 6.3% in the two scenarios and solving more reliably per step &mdash; and, on the tighter dual-quadruped gap specifically, only 5 of 10 perturbed trials actually reach the goal, a robustness gap the single run does not show.</div>
 </section>
 
 <section id="gait-sync" class="wrap">
