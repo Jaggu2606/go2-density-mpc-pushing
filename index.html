@@ -93,7 +93,7 @@
   <div class="headline-block">
     <div class="headline-head">
       <h3>Dual-quadruped &mdash; N=2 robots, gap D = 1.90&nbsp;m</h3>
-      <span class="stat-pill">clearance 0.02 m &middot; t_conv 38.50 s</span>
+      <span class="stat-pill">clearance 0.02 m &middot; t_conv 38.6&plusmn;0.8 s</span>
     </div>
     <div class="headline-media">
       <figure>
@@ -113,13 +113,13 @@
       <img src="assets/figures/case3_filmstrip.png" alt="Dual-quadruped filmstrip progression from start to goal.">
       <figcaption>Filmstrip progression, start (A) to goal (E).</figcaption>
     </figure>
-    <p class="headline-note">Converges in <b>38.50&nbsp;s</b> with the box's true rotated-footprint clearance at <b>0.02&nbsp;m</b> to the obstacle's physical radius — a graze at the density constraint's own worst-case Minkowski boundary, with no velocity discontinuity at closest approach, confirming a true near-miss rather than a hard collision. Both the box-level and robot-level density constraints are active for this result.</p>
+    <p class="headline-note">Converges in <b>38.6&plusmn;0.8&nbsp;s</b> (N=10 trial mean&plusmn;SD) with the box's true rotated-footprint clearance at <b>0.02&nbsp;m</b> to the obstacle's physical radius — a graze at the density constraint's own worst-case Minkowski boundary, with no velocity discontinuity at closest approach, confirming a true near-miss rather than a hard collision. Both the box-level and robot-level density constraints are active for this result.</p>
   </div>
 
   <div class="headline-block">
     <div class="headline-head">
       <h3>Triple-quadruped &mdash; N=3 robots, gap D = 2.49&nbsp;m</h3>
-      <span class="stat-pill">clearance 0.04 m &middot; t_conv 28.92 s</span>
+      <span class="stat-pill">clearance 0.04 m &middot; t_conv 28.5&plusmn;1.0 s</span>
     </div>
     <div class="headline-media">
       <figure>
@@ -139,7 +139,7 @@
       <img src="assets/figures/case4_filmstrip.png" alt="Triple-quadruped filmstrip progression from start to goal.">
       <figcaption>Filmstrip progression, start (A) to goal (E).</figcaption>
     </figure>
-    <p class="headline-note">Converges in <b>28.92&nbsp;s</b> with clearance <b>0.04&nbsp;m</b> — going from 2 to 3 contacts and a heavier, geometrically distinct T-box required no change to the box-level MPC formulation, only per-scenario contact geometry and inertial parameters.</p>
+    <p class="headline-note">Converges in <b>28.5&plusmn;1.0&nbsp;s</b> (N=10 trial mean&plusmn;SD) with clearance <b>0.04&nbsp;m</b> — going from 2 to 3 contacts and a heavier, geometrically distinct T-box required no change to the box-level MPC formulation, only per-scenario contact geometry and inertial parameters.</p>
   </div>
 
   <h3 style="margin-top:8px;">Main results table</h3>
@@ -220,10 +220,10 @@
   </figure>
 
   <h3 style="margin-top:32px;">Robot-level density constraint ablation</h3>
-  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> values (38.6&plusmn;0.8s/353.0&plusmn;18.8&nbsp;ms/0.708&plusmn;0.041&nbsp;m dual; 28.5&plusmn;1.0s/351.0&plusmn;26.1&nbsp;ms/0.603&plusmn;0.007&nbsp;m triple) are reported there in full &mdash; the table below points back to them instead of repeating the numbers a third time. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
+  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> row is repeated below for direct comparison against <i>disabled</i>. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
   <div class="table-scroll">
     <table>
-      <caption>Robot-level density constraint, enabled vs. disabled cost comparison (supplementary data, beyond what's in the paper; headline scenarios' enabled values are already published above, referenced here rather than repeated).</caption>
+      <caption>Robot-level density constraint, enabled vs. disabled cost comparison (supplementary data, beyond what's in the paper).</caption>
       <thead>
         <tr>
           <th>Scenario</th>
@@ -256,7 +256,9 @@
         </tr>
         <tr>
           <td>enabled (Ours)</td>
-          <td class="num" colspan="3">see Main Results / Controller-performance tables above (38.6&plusmn;0.8s / 353.0&plusmn;18.8&nbsp;ms / 0.708&plusmn;0.041&nbsp;m)</td>
+          <td class="num">38.6 &plusmn; 0.8</td>
+          <td class="num">353.0 &plusmn; 18.8</td>
+          <td class="num">0.708 &plusmn; 0.041</td>
         </tr>
         <tr>
           <td rowspan="2">Triple, D=2.49m (headline scenario)</td>
@@ -267,12 +269,14 @@
         </tr>
         <tr>
           <td>enabled (Ours)</td>
-          <td class="num" colspan="3">see Main Results / Controller-performance tables above (28.5&plusmn;1.0s / 351.0&plusmn;26.1&nbsp;ms / 0.603&plusmn;0.007&nbsp;m)</td>
+          <td class="num">28.5 &plusmn; 1.0</td>
+          <td class="num">351.0 &plusmn; 26.1</td>
+          <td class="num">0.603 &plusmn; 0.007</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="table-note">Comparing this table's disabled rows against the linked-to enabled values shows completion time moving oppositely with team size once the constraint is enabled (38.6&plusmn;0.8s at N=2 against 28.5&plusmn;1.0s at N=3), not an isolated team-size effect. The four rows with numbers in this table (D=2.20m's disabled/enabled pair, and the two headline scenarios' disabled rows) are all at their original, pre-optimization solve times; only the two published headline enabled values these link back to (Main Results / Controller-performance tables) reflect the later solver reuse and state warm-starting.</p>
+  <p class="table-note">The enabled rows also show completion time moving oppositely with team size (38.6&plusmn;0.8s at N=2 against 28.5&plusmn;1.0s at N=3), not an isolated team-size effect. The D=1.90m and D=2.49m "enabled (Ours)" completion times and solve times match the Main Results and Controller-performance tables above (same headline runs); D=2.20m's rows and both "disabled" rows are shown at their original, pre-optimization solve times, since that specific configuration hasn't been re-run since.</p>
 </section>
 
 <section id="gallery" class="wrap">
