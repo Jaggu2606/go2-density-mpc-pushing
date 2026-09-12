@@ -144,7 +144,7 @@
   <h3 style="margin-top:8px;">Main results table</h3>
   <div class="table-scroll">
     <table>
-      <caption>Table I &middot; hardest evaluated scenarios, closed-boundary scene (values from the paper's Table&nbsp;I, t<sub>conv</sub>/failed solves from Table&nbsp;III's enabled column).</caption>
+      <caption>Hardest evaluated scenarios, closed-boundary scene, single deterministic run per scenario (supplementary data from the same logged runs as the paper).</caption>
       <thead>
         <tr>
           <th>Scenario (N)</th>
@@ -180,7 +180,7 @@
   <h3 style="margin-top:32px;">Controller-performance ablation</h3>
   <div class="table-scroll">
     <table>
-      <caption>Table II &middot; controller performance metrics, computed directly from the logged runs (paper's Table&nbsp;II).</caption>
+      <caption>Controller performance metrics, computed directly from the logged runs (supplementary data, beyond what's in the paper).</caption>
       <thead>
         <tr>
           <th>Scenario</th>
@@ -216,7 +216,7 @@
   </div>
   <p class="table-note">Solve time and effort/step are mean&plusmn;SD over genuine box-level MPC solve events (solve time additionally Tukey-fence cleaned). Peak density &rho;<sub>b,peak</sub>&nbsp;=&nbsp;20.0 in both scenarios (reported as a point value, not mean&plusmn;SD, since it is a worst-case bound rather than a typical-case cost). Solve times of order 1&nbsp;s against a 50&nbsp;ms real-time budget are the paper's noted solver-cost limitation.</p>
 
-  <figure class="zoomable" data-full="assets/figures/results_single_column.png" style="margin-top:28px;">
+  <figure class="arch-figure zoomable" data-full="assets/figures/results_single_column.png" style="margin-top:28px;">
     <img src="assets/figures/results_single_column.png" alt="Object and robot trajectories, object density, and minimum robot-obstacle distances for both scenarios.">
     <figcaption><b>Fig. 3.</b> (a,b) Object and robot trajectories, (c,e) object density, and (d,f) minimum robot&ndash;obstacle distances, for the dual- and triple-quadruped scenarios.</figcaption>
   </figure>
@@ -225,7 +225,7 @@
   <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled (used for every other result on this page); an extra active safety constraint is not free, so solve time, solve-failure rate, and separation shift slightly rather than uniformly improving.</p>
   <div class="table-scroll">
     <table>
-      <caption>Table III &middot; robot-level density constraint, enabled vs. disabled, full cost comparison (paper's Table&nbsp;III).</caption>
+      <caption>Robot-level density constraint, enabled vs. disabled, full cost comparison (supplementary data, beyond what's in the paper).</caption>
       <thead>
         <tr>
           <th>Scenario</th>
@@ -538,7 +538,7 @@
 
   <div class="table-scroll" style="margin-top:20px;">
     <table>
-      <caption>Table V &middot; gait phase synchronization, default (locked) vs. a deliberate half-cycle offset (paper's Table&nbsp;V).</caption>
+      <caption>Gait phase synchronization, default (locked) vs. a deliberate half-cycle offset (supplementary data; the paper covers this as a brief paragraph, not a table).</caption>
       <thead>
         <tr>
           <th>Metric</th>
