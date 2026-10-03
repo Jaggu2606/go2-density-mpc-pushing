@@ -39,14 +39,14 @@
       <video controls loop muted playsinline autoplay>
         <source src="assets/videos/case4_triple_headline_gap_D2.49m.mp4" type="video/mp4">
       </video>
-      <figcaption>Triple-quadruped &middot; D&nbsp;=&nbsp;2.49&nbsp;m gap</figcaption>
+      <figcaption>Triple-quadruped &middot; D&nbsp;=&nbsp;2.50&nbsp;m gap</figcaption>
     </figure>
   </div>
   <h3 class="section-kicker" style="margin-top:26px;">Key Contributions</h3>
   <ul class="contrib-list">
-    <li>An object-level MPC that coordinates push-only contact forces for goal-directed, obstacle-aware transport without a prescribed reference trajectory.</li>
-    <li>Robot-level density MPCs that track moving contact locations while enforcing obstacle and time-varying inter-agent safety constraints.</li>
-    <li>MuJoCo validation with two and three Unitree Go2 robots using whole-body contact dynamics, compared against matched CBF MPC (following the discrete-time MPC-CBF formulation of Zeng, Zhang &amp; Sreenath, ACC 2021) and RRT* (Karaman &amp; Frazzoli, 2011)-plus-tracking baselines.</li>
+    <li>A hierarchical multi-agent MPC framework for collaborative pushing that couples a centralized object-level MPC for push-only contact-force optimization with distributed robot-level MPCs for tracking moving contact locations under an explicit shared-information assumption, enabling goal-directed transport without a prescribed object trajectory.</li>
+    <li>A discrete-time safety constraint based on density functions, integrated into both MPC layers to enforce safe predictive control for obstacle avoidance and inter-agent separation.</li>
+    <li>MuJoCo validation of collaborative transport with two and three Unitree Go2 quadruped robots, including comparisons against matched CBF-MPC (following Zeng, Zhang &amp; Sreenath, ACC 2021) and RRT* based tracking baselines (Karaman &amp; Frazzoli, 2011).</li>
   </ul>
   <div class="link-row">
     <span class="btn" aria-disabled="true" style="opacity:0.6; cursor:default;">
@@ -66,7 +66,7 @@
   <span class="section-kicker">Abstract</span>
   <h2 class="section-title">Density-safe collaborative transport, for a team</h2>
   <div class="abstract-card">
-    <p>This paper presents a hierarchical density-based model predictive control framework for safe collaborative manipulation by multiple quadrupedal robots. The framework enables a team of robots to push a shared object to a desired pose using only the initial and goal poses, without requiring a precomputed reference trajectory. A box-level MPC optimizes contact forces while enforcing a control-density constraint for goal convergence and obstacle avoidance. Each robot-level whole-body MPC tracks its moving contact location while accounting for static obstacles and the time-varying positions of neighboring robots. The approach is evaluated in MuJoCo using whole-body contact dynamics for two and three Unitree Go2 quadrupeds collaboratively pushing rigid objects through narrow passages. Comparisons with matched Control Barrier Function (CBF) MPC and RRT*-plus-tracking baselines demonstrate the effectiveness of the proposed density-based formulation for push-only, force- and torque-coupled manipulation tasks.</p>
+    <p>This paper presents a hierarchical density-based model predictive control framework for safe collaborative manipulation by multiple quadrupedal robots. The framework enables a team of robots to push a shared object to a desired pose using only the initial and goal poses, without requiring a precomputed reference trajectory. A centralized box-level MPC optimizes contact forces while enforcing a control-density constraint for goal convergence and obstacle avoidance. Each robot then solves its own distributed robot-level whole-body MPC, under a stated shared-information assumption, to track its moving contact location while accounting for static obstacles and the time-varying positions of neighboring robots. The approach is evaluated in MuJoCo using whole-body contact dynamics for two and three Unitree Go2 quadrupeds collaboratively pushing rigid objects through narrow passages. Comparisons with matched Control Barrier Function (CBF) MPC and RRT*-plus-tracking baselines demonstrate the effectiveness of the proposed density-based formulation for push-only, force- and torque-coupled manipulation tasks.</p>
   </div>
 </section>
 
@@ -118,7 +118,7 @@
 
   <div class="headline-block">
     <div class="headline-head">
-      <h3>Triple-quadruped &mdash; N=3 robots, gap D = 2.49&nbsp;m</h3>
+      <h3>Triple-quadruped &mdash; N=3 robots, gap D = 2.50&nbsp;m</h3>
       <span class="stat-pill">clearance 0.04 m &middot; t_conv 28.5&plusmn;1.0 s</span>
     </div>
     <div class="headline-media">
@@ -126,7 +126,7 @@
         <video controls loop muted playsinline>
           <source src="assets/videos/case4_triple_headline_gap_D2.49m.mp4" type="video/mp4">
         </video>
-        <figcaption>Three Go2 quadrupeds pushing a heavier T-box through a 2.49&nbsp;m gap between two static obstacles, same corridor-diagonal heading and boundary wall as the dual-quadruped case.</figcaption>
+        <figcaption>Three Go2 quadrupeds pushing a heavier T-box through a 2.50&nbsp;m gap between two static obstacles, same corridor-diagonal heading and boundary wall as the dual-quadruped case.</figcaption>
       </figure>
       <div class="headline-side">
         <figure class="zoomable" data-full="assets/figures/case4_tighter_traj.png">
@@ -165,7 +165,7 @@
         </tr>
         <tr>
           <td>Triple-quadruped (3)</td>
-          <td class="num">2.49</td>
+          <td class="num">2.50</td>
           <td class="num">28.5 &plusmn; 1.0</td>
           <td class="num">20.0</td>
           <td class="num">0.04</td>
@@ -220,7 +220,7 @@
   </figure>
 
   <h3 style="margin-top:32px;">Robot-level density constraint ablation</h3>
-  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.49m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> row is repeated below for direct comparison against <i>disabled</i>. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
+  <p class="section-lede">A second ablation isolates the robot-level density constraint, independent of the box-level avoidance above. All three scenarios converge with the constraint enabled (both levels active) as well as disabled; an extra active safety constraint is not free, so solve time and separation shift slightly rather than uniformly improving. "Dual, D=1.90m" and "Triple, D=2.50m" are the same two headline scenarios reported in the Main Results and Controller-performance tables above &mdash; their <i>enabled</i> row is repeated below for direct comparison against <i>disabled</i>. "Dual, D=2.20m" is an additional gap-width variant not used elsewhere on this page, so both its rows are shown in full.</p>
   <div class="table-scroll">
     <table>
       <caption>Robot-level density constraint, enabled vs. disabled cost comparison (supplementary data, beyond what's in the paper).</caption>
@@ -261,7 +261,7 @@
           <td class="num">0.708 &plusmn; 0.041</td>
         </tr>
         <tr>
-          <td rowspan="2">Triple, D=2.49m (headline scenario)</td>
+          <td rowspan="2">Triple, D=2.50m (headline scenario)</td>
           <td>disabled</td>
           <td class="num">28.16</td>
           <td class="num">2548.5 &plusmn; 1887.2</td>
@@ -276,7 +276,7 @@
       </tbody>
     </table>
   </div>
-  <p class="table-note">Completion time is a single event per run (the moment the box reaches the goal), so each cell is one number; solve time and separation are instead sampled at every control step across that same run (hundreds of samples over the ~30&ndash;60&nbsp;s), so their &plusmn; here is within-run sample variability, not a trial-to-trial statistic &mdash; a different, older quantity from the N=10 trial-to-trial &plusmn; reported elsewhere on the page. The enabled rows also show completion time moving oppositely with team size (38.50s at N=2 against 28.92s at N=3), not an isolated team-size effect. The D=1.90m and D=2.49m "enabled (Ours)" solve times match the Controller-performance table above (same headline runs); their completion times are that same run's single deterministic-run figure, shown here on equal footing with the "disabled" column rather than as the N=10 trial mean (Main Results/Baseline Comparison report the N=10 mean&plusmn;SD for these same runs, 38.6&plusmn;0.8s and 28.5&plusmn;1.0s respectively). D=2.20m's rows and both "disabled" rows are shown at their original, pre-optimization solve times, since that specific configuration hasn't been re-run since.</p>
+  <p class="table-note">Completion time is a single event per run (the moment the box reaches the goal), so each cell is one number; solve time and separation are instead sampled at every control step across that same run (hundreds of samples over the ~30&ndash;60&nbsp;s), so their &plusmn; here is within-run sample variability, not a trial-to-trial statistic &mdash; a different, older quantity from the N=10 trial-to-trial &plusmn; reported elsewhere on the page. The enabled rows also show completion time moving oppositely with team size (38.50s at N=2 against 28.92s at N=3), not an isolated team-size effect. The D=1.90m and D=2.50m "enabled (Ours)" solve times match the Controller-performance table above (same headline runs); their completion times are that same run's single deterministic-run figure, shown here on equal footing with the "disabled" column rather than as the N=10 trial mean (Main Results/Baseline Comparison report the N=10 mean&plusmn;SD for these same runs, 38.6&plusmn;0.8s and 28.5&plusmn;1.0s respectively). D=2.20m's rows and both "disabled" rows are shown at their original, pre-optimization solve times, since that specific configuration hasn't been re-run since.</p>
 </section>
 
 <section id="gallery" class="wrap">
@@ -361,7 +361,7 @@
         </video>
         <div class="card-body">
           <h4>Wider gap, D = 2.89&nbsp;m</h4>
-          <p>The wider precursor gap the D=2.49m headline result was later tightened (~14%) from, rerun with a closed perimeter wall around the arena.</p>
+          <p>The wider precursor gap the D=2.50m headline result was later tightened (~14%) from, rerun with a closed perimeter wall around the arena.</p>
           <div class="tag-row"><span class="tag">N=3</span><span class="tag">D=2.89m</span><span class="tag">walled</span></div>
         </div>
       </div>
@@ -420,7 +420,7 @@
       </video>
       <div class="card-body">
         <h4>CBF MPC, triple-quadruped</h4>
-        <p>Headline D=2.49&nbsp;m gap scenario under CBF MPC. It also converges, with density MPC completing this scenario 6.3% faster &mdash; and remains fully robust, 10/10, over the same 10-trial perturbation check.</p>
+        <p>Headline D=2.50&nbsp;m gap scenario under CBF MPC. It also converges, with density MPC completing this scenario 6.3% faster &mdash; and remains fully robust, 10/10, over the same 10-trial perturbation check.</p>
       </div>
     </div>
     <div class="baseline-card">
@@ -438,7 +438,7 @@
       </video>
       <div class="card-body">
         <h4>RRT*+tracking, triple-quadruped</h4>
-        <p>Headline D=2.49&nbsp;m gap scenario under RRT*-plus-tracking (identical MPCs, density avoidance disabled) &mdash; the exact geometry the table below's numbers are measured on.</p>
+        <p>Headline D=2.50&nbsp;m gap scenario under RRT*-plus-tracking (identical MPCs, density avoidance disabled) &mdash; the exact geometry the table below's numbers are measured on.</p>
       </div>
     </div>
   </div>
@@ -465,45 +465,45 @@
           <td><b>Density MPC</b></td>
           <td class="num">10/10</td>
           <td class="num">38.6 &plusmn; 0.8</td>
-          <td class="num">0.02</td>
+          <td class="num">0.006 &plusmn; 0.009</td>
         </tr>
         <tr>
           <td>CBF MPC</td>
           <td class="num">5/10</td>
           <td class="num">48.0 &plusmn; 0.7</td>
-          <td class="num">0.00</td>
+          <td class="num">0.000 &plusmn; 0.002</td>
         </tr>
         <tr>
           <td>RRT* + tracking</td>
           <td class="num">0/10</td>
           <td class="num">&mdash;</td>
-          <td class="num">0.50</td>
+          <td class="num">&minus;0.001 &plusmn; 0.000</td>
         </tr>
         <tr><td colspan="4"><i>T-shape pushing (n=3)</i></td></tr>
         <tr>
           <td><b>Density MPC</b></td>
           <td class="num">10/10</td>
           <td class="num">28.5 &plusmn; 1.0</td>
-          <td class="num">0.04</td>
+          <td class="num">0.040 &plusmn; 0.017</td>
         </tr>
         <tr>
           <td>CBF MPC</td>
           <td class="num">10/10</td>
           <td class="num">31.1 &plusmn; 0.8</td>
-          <td class="num">0.04</td>
+          <td class="num">0.049 &plusmn; 0.022</td>
         </tr>
         <tr>
           <td>RRT* + tracking</td>
           <td class="num">0/10</td>
           <td class="num">&mdash;</td>
-          <td class="num">0.51</td>
+          <td class="num">&minus;0.001 &plusmn; 0.000</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="table-note">Success and completion time (mean&plusmn;SD) are over N=10 trials/method with the robots' start pose independently perturbed each trial; box-level solve time and RRT* yaw drift are each from that method's own single deterministic run. With solver reuse and state warm-starting, density MPC's own box-level solve time is 15.55&plusmn;2.39&nbsp;ms (dual-quad) and 16.98&plusmn;2.25&nbsp;ms (triple-quad); CBF MPC's box-level solve, measured separately (not re-optimized), was 834.6&plusmn;433.7&nbsp;ms (dual-quad) and 661.2&plusmn;404.3&nbsp;ms (triple-quad). The RRT* baseline's heading drifts by tens of degrees before stalling (&minus;47.3&deg; to 10.5&deg; dual-quad, &minus;67.6&deg; to 0.3&deg; triple-quad). CBF MPC citation: Zeng, Zhang &amp; Sreenath, "Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Function," ACC 2021. RRT* citation: Karaman &amp; Frazzoli, "Sampling-based Algorithms for Optimal Motion Planning," IJRR 2011.</p>
+  <p class="table-note">Success, completion time, and clearance (mean&plusmn;SD) are over N=10 trials/method with the robots' start pose independently perturbed each trial, matching Table&nbsp;II in the paper; box-level solve time and RRT* yaw drift are each from that method's own single deterministic run instead. With solver reuse and state warm-starting, density MPC's own box-level solve time is 15.55&plusmn;2.39&nbsp;ms (dual-quad) and 16.98&plusmn;2.25&nbsp;ms (triple-quad); CBF MPC's box-level solve, measured separately (not re-optimized), was 834.6&plusmn;433.7&nbsp;ms (dual-quad) and 661.2&plusmn;404.3&nbsp;ms (triple-quad). The RRT* baseline's heading drifts by tens of degrees before stalling (&minus;47.3&deg; to 10.5&deg; dual-quad, &minus;67.6&deg; to 0.3&deg; triple-quad). CBF MPC citation: Zeng, Zhang &amp; Sreenath, "Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Function," ACC 2021. RRT* citation: Karaman &amp; Frazzoli, "Sampling-based Algorithms for Optimal Motion Planning," IJRR 2011.</p>
   <div class="callout">
-    <b>Note on the RRT* videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.49&nbsp;m headline gap geometry the table's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling, and the RRT* baseline fails to reach the goal in every one of the 10 perturbed trials at both team sizes. CBF MPC reaches the goal in this scenario's single run at both gap widths, with density MPC reducing completion time by 22.5% and 6.3% in the two scenarios and solving more reliably per step &mdash; and, on the tighter dual-quadruped gap specifically, only 5 of 10 perturbed trials actually reach the goal, a robustness gap the single run does not show.</div>
+    <b>Note on the RRT* videos above:</b> both are rendered on the exact D=1.90&nbsp;m / D=2.50&nbsp;m headline gap geometry the table's numbers are measured on. In both, commanded forces collapse toward zero on every robot simultaneously while heading drifts continuously rather than settling, and the RRT* baseline fails to reach the goal in every one of the 10 perturbed trials at both team sizes. CBF MPC reaches the goal in this scenario's single run at both gap widths, with density MPC reducing completion time by 22.5% and 6.3% in the two scenarios and solving more reliably per step &mdash; and, on the tighter dual-quadruped gap specifically, only 5 of 10 perturbed trials actually reach the goal, a robustness gap the single run does not show.</div>
 </section>
 
 <section id="gait-sync" class="wrap">
@@ -549,9 +549,9 @@
           <td class="num">37.90</td>
         </tr>
         <tr>
-          <td>Push-force coeff. of variation</td>
-          <td class="num">0.781</td>
-          <td class="num">0.845</td>
+          <td>Push-force coeff. of variation (%)</td>
+          <td class="num">78.1</td>
+          <td class="num">84.5</td>
         </tr>
         <tr>
           <td>Mean step-to-step force change (N)</td>
